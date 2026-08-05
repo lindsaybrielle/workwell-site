@@ -248,13 +248,13 @@
       <h2>Let's talk.</h2>
       <p>Join the mailing list for best practices and resources on resilience and culture-building &mdash; or tell us a bit about your team if you're exploring a workshop.</p>
     </div>
-    <form class="contact-form" action="mailto:brielle@strousehouse.co" method="post" enctype="text/plain">
+    <form class="contact-form" id="contact-form">
       <label for="f-name">Name</label>
-      <input id="f-name" type="text" name="Name" placeholder="Your name" required>
+      <input id="f-name" type="text" name="Name" placeholder="Your name" required autocomplete="name">
       <label for="f-company">Company (optional)</label>
-      <input id="f-company" type="text" name="Company" placeholder="Company name">
+      <input id="f-company" type="text" name="Company" placeholder="Company name" autocomplete="organization">
       <label for="f-email">Email</label>
-      <input id="f-email" type="email" name="Email" placeholder="you@company.com" required>
+      <input id="f-email" type="email" name="Email" placeholder="you@company.com" required autocomplete="email">
       <label for="f-message">Message</label>
       <textarea id="f-message" name="Message" rows="4" placeholder="Tell us about your team, or just say hi"></textarea>
       <button class="btn btn-mustard" type="submit">Submit</button>

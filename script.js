@@ -201,4 +201,27 @@
   if (fab) {
     fab.addEventListener('click', () => { if (open) closePanel(); else openPanel(); });
   }
+
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = contactForm.Name.value.trim();
+      const company = contactForm.Company.value.trim();
+      const email = contactForm.Email.value.trim();
+      const message = contactForm.Message.value.trim();
+      const subject = 'Workwell enquiry from ' + (name || 'the site');
+      const bodyLines = [
+        'Name: ' + name,
+        company ? 'Company: ' + company : null,
+        'Email: ' + email,
+        '',
+        message
+      ].filter((line) => line !== null);
+      const mailto = 'mailto:brielle@strousehouse.co'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(bodyLines.join('\n'));
+      window.location.href = mailto;
+    });
+  }
 })();
