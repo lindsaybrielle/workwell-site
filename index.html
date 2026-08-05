@@ -249,6 +249,9 @@
       <p>Join the mailing list for best practices and resources on resilience and culture-building &mdash; or tell us a bit about your team if you're exploring a workshop.</p>
     </div>
     <form class="contact-form" id="contact-form">
+      <input type="hidden" name="access_key" value="PASTE_YOUR_WEB3FORMS_KEY_HERE">
+      <input type="hidden" name="subject" value="New enquiry from workwellcards.com">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <label for="f-name">Name</label>
       <input id="f-name" type="text" name="Name" placeholder="Your name" required autocomplete="name">
       <label for="f-company">Company (optional)</label>
@@ -258,7 +261,7 @@
       <label for="f-message">Message</label>
       <textarea id="f-message" name="Message" rows="4" placeholder="Tell us about your team, or just say hi"></textarea>
       <button class="btn btn-mustard" type="submit">Submit</button>
-      <div class="note">Submitting opens an email to brielle@strousehouse.co in your mail app, pre-filled with what you wrote.</div>
+      <div class="note" id="form-status" role="status"></div>
     </form>
   </div>
 </section>

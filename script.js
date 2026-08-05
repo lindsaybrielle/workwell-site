@@ -203,25 +203,47 @@
   }
 
   const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
   if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const name = contactForm.Name.value.trim();
-      const company = contactForm.Company.value.trim();
-      const email = contactForm.Email.value.trim();
-      const message = contactForm.Message.value.trim();
-      const subject = 'Workwell enquiry from ' + (name || 'the site');
-      const bodyLines = [
-        'Name: ' + name,
-        company ? 'Company: ' + company : null,
-        'Email: ' + email,
-        '',
-        message
-      ].filter((line) => line !== null);
-      const mailto = 'mailto:brielle@strousehouse.co'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(bodyLines.join('\n'));
-      window.location.href = mailto;
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const accessKey = contactForm.access_key.value;
+
+      if (!accessKey || accessKey === 'PASTE_YOUR_WEB3FORMS_KEY_HERE') {
+        formStatus.textContent = 'Form isn’t connected yet — add a Web3Forms access key to go live.';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      formStatus.textContent = 'Sending…';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: accessKey,
+            subject: contactForm.subject.value,
+            botcheck: contactForm.botcheck.checked,
+            Name: contactForm.Name.value.trim(),
+            Company: contactForm.Company.value.trim(),
+            Email: contactForm.Email.value.trim(),
+            Message: contactForm.Message.value.trim()
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          formStatus.textContent = 'Thanks — that’s sent. We’ll get back to you soon.';
+          contactForm.reset();
+        } else {
+          formStatus.textContent = 'Something went wrong sending that. Mind trying again?';
+        }
+      } catch (err) {
+        formStatus.textContent = 'Something went wrong sending that. Mind trying again?';
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   }
 })();
