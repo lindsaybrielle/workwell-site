@@ -308,4 +308,61 @@
       }
     });
   }
+
+  const TESTIMONIALS = [
+    {
+      quote: '“The team building cards have been a fantastic addition to our work environment. They’ve sparked meaningful conversations, strengthened our connections, and made collaboration feel more natural and fun. I’d highly recommend them to any team looking to build trust and engagement.”',
+      cite: '— Anika, Associate Manager'
+    },
+    {
+      quote: '“Some of the exercises I knew, and some were totally new. Having them physically in front of me makes the difference.”',
+      cite: '— Emily, Senior Manager'
+    }
+  ];
+  const tSlide = document.getElementById('t-slide');
+  const tQuote = document.getElementById('t-quote');
+  const tCite = document.getElementById('t-cite');
+  const tDots = document.getElementById('t-dots');
+  const tPrev = document.getElementById('t-prev');
+  const tNext = document.getElementById('t-next');
+
+  if (tSlide && TESTIMONIALS.length) {
+    let tIndex = 0;
+    let tTimer = null;
+
+    TESTIMONIALS.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', 'Show testimonial ' + (i + 1));
+      dot.addEventListener('click', () => showTestimonial(i, true));
+      tDots.appendChild(dot);
+    });
+
+    function showTestimonial(i, userInitiated) {
+      tIndex = (i + TESTIMONIALS.length) % TESTIMONIALS.length;
+      const t = TESTIMONIALS[tIndex];
+      tQuote.textContent = t.quote;
+      tCite.textContent = t.cite;
+      tSlide.classList.remove('fade');
+      void tSlide.offsetWidth;
+      tSlide.classList.add('fade');
+      Array.from(tDots.children).forEach((dot, i2) => {
+        if (i2 === tIndex) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+      if (userInitiated) restartAutoAdvance();
+    }
+
+    function restartAutoAdvance() {
+      clearInterval(tTimer);
+      if (TESTIMONIALS.length > 1) {
+        tTimer = setInterval(() => showTestimonial(tIndex + 1, false), 6000);
+      }
+    }
+
+    tPrev.addEventListener('click', () => showTestimonial(tIndex - 1, true));
+    tNext.addEventListener('click', () => showTestimonial(tIndex + 1, true));
+
+    showTestimonial(0, false);
+    restartAutoAdvance();
+  }
 })();

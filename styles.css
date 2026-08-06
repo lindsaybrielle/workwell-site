@@ -176,8 +176,25 @@ section { position: relative; }
 /* ---------- who / testimonial ---------- */
 .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-top: 8px; }
 .testimonial-card { background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 32px 30px; box-shadow: var(--shadow); }
+.testimonial-carousel { display: flex; align-items: flex-start; gap: 14px; margin-top: 16px; }
+.t-slide { flex: 1; min-height: 9.5em; }
+.t-slide.fade { animation: tFade 0.35s ease; }
+@keyframes tFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .testimonial-card blockquote { all: unset; display: block; font-size: 1.05rem; line-height: 1.6; }
 .testimonial-card cite { display: block; margin-top: 18px; font-style: normal; font-weight: 600; font-size: 0.88rem; color: var(--teal); }
+.t-nav {
+  all: unset; cursor: pointer; flex: none; width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); color: var(--teal); font-size: 1rem;
+  transition: background 0.15s ease;
+}
+.t-nav:hover { background: var(--rose-pale); }
+.t-dots { display: flex; gap: 8px; margin-top: 18px; }
+.t-dots button {
+  all: unset; cursor: pointer; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--line);
+}
+.t-dots button[aria-current="true"] { background: var(--rose); width: 20px; border-radius: 999px; transition: width 0.2s ease; }
 
 /* ---------- about ---------- */
 .about { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; margin-top: 8px; }

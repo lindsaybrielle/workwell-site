@@ -226,10 +226,15 @@
     <div class="who-grid">
       <div class="testimonial-card">
         <div class="eyebrow">What people are saying</div>
-        <blockquote style="margin-top:14px;">&ldquo;The team building cards have been a fantastic addition to our work environment. They&rsquo;ve sparked meaningful conversations, strengthened our connections, and made collaboration feel more natural and fun. I&rsquo;d highly recommend them to any team looking to build trust and engagement.&rdquo;</blockquote>
-        <cite>&ndash; Anika, Associate Manager</cite>
-        <blockquote style="margin-top:22px;">&ldquo;Some of the exercises I knew, and some were totally new. Having them physically in front of me makes the difference.&rdquo;</blockquote>
-        <cite>&ndash; Emily, Senior Manager</cite>
+        <div class="testimonial-carousel" id="testimonial-carousel">
+          <button class="t-nav t-prev" id="t-prev" aria-label="Previous testimonial">&larr;</button>
+          <div class="t-slide" id="t-slide" aria-live="polite">
+            <blockquote id="t-quote"></blockquote>
+            <cite id="t-cite"></cite>
+          </div>
+          <button class="t-nav t-next" id="t-next" aria-label="Next testimonial">&rarr;</button>
+        </div>
+        <div class="t-dots" id="t-dots"></div>
       </div>
       <div class="about">
         <img src="assets/lindsay.jpg" alt="Brielle, founder of workwell">
