@@ -37,8 +37,8 @@
       el('path', { d: 'M110,104 q7,5 14,0', stroke: '#1f3536', 'stroke-width': 3.2, fill: 'none', 'stroke-linecap': 'round' }, g);
       el('path', { d: 'M92,118 q8,6 16,0', stroke: '#1f3536', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, g);
     } else {
-      el('ellipse', { cx: 84, cy: 104, rx: 4.5, ry: 5.5, fill: '#1f3536' }, g);
-      el('ellipse', { cx: 116, cy: 104, rx: 4.5, ry: 5.5, fill: '#1f3536' }, g);
+      el('ellipse', { cx: 84, cy: 104, rx: 4.5, ry: 5.5, fill: '#1f3536', class: 'eye' }, g);
+      el('ellipse', { cx: 116, cy: 104, rx: 4.5, ry: 5.5, fill: '#1f3536', class: 'eye' }, g);
       el('path', { d: 'M88,118 q12,10 24,0', stroke: '#1f3536', 'stroke-width': 3.2, fill: 'none', 'stroke-linecap': 'round' }, g);
     }
   }
@@ -108,6 +108,30 @@
       hero.style.transition = 'transform 2.6s ease-in-out';
       hero.style.transform = heroIn ? 'scale(1.05)' : 'scale(1)';
     }, 2600);
+
+    const EYE_RADIUS = 2.6;
+    let targetX = 0, targetY = 0, curX = 0, curY = 0;
+    const heroSection = document.getElementById('top');
+    (heroSection || document).addEventListener('mousemove', (e) => {
+      const r = hero.getBoundingClientRect();
+      if (!r.width) return;
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy) || 1;
+      const clamped = Math.min(dist, 260) / 260;
+      targetX = (dx / dist) * EYE_RADIUS * clamped;
+      targetY = (dy / dist) * EYE_RADIUS * clamped;
+    });
+    (function trackEyes() {
+      curX += (targetX - curX) * 0.15;
+      curY += (targetY - curY) * 0.15;
+      hero.querySelectorAll('.eye').forEach((eye) => {
+        eye.setAttribute('transform', 'translate(' + curX.toFixed(2) + ',' + curY.toFixed(2) + ')');
+      });
+      requestAnimationFrame(trackEyes);
+    })();
   }
 
   let clenchTimer = null;
@@ -129,12 +153,43 @@
   });
 
   const fabMascot = document.getElementById('fab-mascot');
+  let fabPose = 'breathe';
+  let fabPanelOpen = false;
   if (fabMascot) {
-    render(fabMascot, 'breathe');
+    render(fabMascot, fabPose);
     setInterval(() => {
       fabMascot.style.transition = 'transform 2.2s ease-in-out';
       fabMascot.style.transform = fabMascot.style.transform === 'scale(1.06)' ? 'scale(1)' : 'scale(1.06)';
     }, 2200);
+
+    const SECTION_POSES = [
+      { selector: '#top', pose: 'breathe' },
+      { selector: '#practice', pose: 'clench' },
+      { selector: '.pack-band.restore', pose: 'breathe' },
+      { selector: '.pack-band.connection', pose: 'reflect' },
+      { selector: '#workshops', pose: 'snack' },
+      { selector: '#about', pose: 'reflect' },
+      { selector: '#contact', pose: 'breathe' }
+    ].map((s) => ({ ...s, el: document.querySelector(s.selector) })).filter((s) => s.el);
+
+    if (SECTION_POSES.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        let best = null;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) {
+            best = entry;
+          }
+        });
+        if (best) {
+          const match = SECTION_POSES.find((s) => s.el === best.target);
+          if (match && match.pose !== fabPose) {
+            fabPose = match.pose;
+            if (!fabPanelOpen) render(fabMascot, fabPose);
+          }
+        }
+      }, { threshold: [0.35, 0.5, 0.65] });
+      SECTION_POSES.forEach((s) => observer.observe(s.el));
+    }
   }
 
   const fab = document.getElementById('egg-fab');
@@ -149,10 +204,17 @@
   let open = false;
   let liveTimer = null;
 
-  function closePanel() { open = false; slot.innerHTML = ''; clearInterval(liveTimer); }
+  function closePanel() {
+    open = false;
+    fabPanelOpen = false;
+    slot.innerHTML = '';
+    clearInterval(liveTimer);
+    if (fabMascot) render(fabMascot, fabPose);
+  }
 
   function openPanel() {
     open = true;
+    fabPanelOpen = true;
     const d = EGGS[eggIndex];
     slot.innerHTML =
       '<div class="egg-panel">' +
