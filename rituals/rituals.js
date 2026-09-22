@@ -217,7 +217,7 @@
     if (currentUser) {
       setStatus('Signed in — saves sync to your account.');
     } else if (firebaseConfigured()) {
-      setStatus('Click "Save to my list" to sign in with Google and save this, or use "Save without signing in."');
+      setStatus('Click "Save to my list" to sign in with Google and save this, or use "Share to team board" to post it to your team’s session.');
     } else {
       setStatus('Saved privately in this browser — nothing here is shared publicly.');
     }
@@ -354,21 +354,32 @@
     };
   }
 
-  el('copy-answer').addEventListener('click', () => {
-    const { text } = currentComboText();
-    copyText(text).then(
-      () => setStatus('Copied to your clipboard.'),
-      () => setStatus('Couldn’t copy automatically — select the text in the box below and copy it manually.')
-    );
-  });
-
-  el('save-local').addEventListener('click', async () => {
+  el('share-team-btn').addEventListener('click', async () => {
+    if (!db) { setStatus('Team board needs a live connection that isn’t available right now.'); return; }
     const { r, p, note } = currentComboText();
-    const list = getLocalSaved();
-    list.push({ ritual: r.emoji + ' ' + r.title, process: p.emoji + ' ' + p.title, note, date: new Date().toISOString() });
-    setLocalSaved(list);
-    if (!currentUser) { renderSavedList(); }
-    setStatus('Saved to your list below — this device only, no account needed.');
+    const btn = el('share-team-btn');
+    btn.disabled = true;
+    let code = roomCode;
+    if (!code) {
+      code = randomRoomCode();
+      try {
+        await db.collection('rooms').doc(code).set({ createdAt: firebase.firestore.FieldValue.serverTimestamp(), active: true });
+        showRoomActive(code);
+        watchRoom(code);
+      } catch (e) {
+        btn.disabled = false;
+        setStatus('Couldn’t start a team board right now — please try again.');
+        return;
+      }
+    }
+    try {
+      await addRoomEntry(code, r, p, note, '');
+      setStatus('Shared to your team board — code ' + code + '. Scroll down to see it and invite your team.');
+      el('room-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) {
+      setStatus('Couldn’t share to the team board — please try again.');
+    }
+    btn.disabled = false;
   });
 
   el('save-answer').addEventListener('click', async () => {
@@ -383,7 +394,7 @@
         currentUser = result.user;
       } catch (err) {
         saveBtn.disabled = false;
-        setStatus('Sign-in didn’t finish, so this wasn’t saved. Try again, or use "Save without signing in."');
+        setStatus('Sign-in didn’t finish, so this wasn’t saved. Try again, or use "Share to team board" instead.');
         return;
       }
       saveBtn.disabled = false;
@@ -552,6 +563,17 @@
       });
   }
 
+  function addRoomEntry(code, r, p, note, name) {
+    return db.collection('rooms').doc(code).collection('entries').add({
+      ritual: r.emoji + ' ' + r.title,
+      process: p.emoji + ' ' + p.title,
+      note: note,
+      name: name || '',
+      votes: 0,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+
   async function voteEntry(entryId) {
     const votedIds = new Set(loadJSON(VOTED_KEY));
     if (votedIds.has(entryId) || !db || !roomCode) return;
@@ -600,14 +622,7 @@
     const { r, p, note } = currentComboText();
     const name = el('room-name-input').value.trim();
     try {
-      await db.collection('rooms').doc(roomCode).collection('entries').add({
-        ritual: r.emoji + ' ' + r.title,
-        process: p.emoji + ' ' + p.title,
-        note: note,
-        name: name,
-        votes: 0,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      await addRoomEntry(roomCode, r, p, note, name);
       setRoomStatus('Shared to the room board.');
     } catch (e) {
       setRoomStatus('Couldn’t share to the room — please try again.');

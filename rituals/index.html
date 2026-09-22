@@ -146,14 +146,17 @@
 
       <label for="try-input">What would you actually try?</label>
       <div class="r-example" id="r-example">&nbsp;</div>
+      <ul class="r-prompts">
+        <li>What's already happening with this process today?</li>
+        <li>What can you pull from this ritual to make it feel more fun, meaningful, or motivational?</li>
+      </ul>
       <textarea id="try-input" rows="3" placeholder="Sketch how this would actually work in your next standup, launch, retro..."></textarea>
       <div class="r-actions">
-        <button class="btn btn-ghost btn-sm" id="copy-answer">Copy my answer</button>
-        <button class="btn btn-outline-sage btn-sm" id="save-local">Save without signing in</button>
+        <button class="btn btn-outline-sage btn-sm" id="share-team-btn">Share to team board</button>
         <button class="btn btn-sage btn-sm" id="save-answer">Save to my list</button>
       </div>
       <p class="r-note" id="r-status">Saved privately in this browser &mdash; nothing here is shared publicly.</p>
-      <p class="r-note r-mylist-explainer">"My list" is a personal collection tied to your Google account &mdash; only you can see it, it follows you across devices, and it's never shown to anyone else. Prefer to skip the Google prompt? Use "Save without signing in" to keep your list on just this device instead.</p>
+      <p class="r-note r-mylist-explainer">"My list" is a personal collection tied to your Google account &mdash; only you can see it, it follows you across devices, and it's never shown to anyone else. Want your team to see it instead? Use "Share to team board" to post it to your team's shared session.</p>
     </div>
 
     <div class="r-saved" id="saved-section" hidden>
@@ -164,7 +167,7 @@
     <div class="r-room" id="room-section">
       <div class="eyebrow">In the room together?</div>
       <h2 class="r-room-title">Start a shared board for your session</h2>
-      <p class="r-room-lede">Get a short code, share it with the room, and watch everyone's combinations land on one shared board &mdash; vote on favourites, then export a shortlist. No sign-in needed for anyone.</p>
+      <p class="r-room-lede">Get a room code, share it with your team, and vote on favourites.</p>
 
       <div class="r-room-setup" id="room-setup">
         <div class="r-room-setup-col">
