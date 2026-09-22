@@ -32,15 +32,15 @@
 // Workspace / enterprise accounts automatically — no extra setup needed
 // for that part.
 //
-// Until you do this, the placeholder values below mean the "Sign in with
-// Google" button stays visible but disabled, and saved combinations keep
-// working exactly as before — saved locally in this browser only.
+// Configured 2026-09-22 against the "workwell-rituals" Firebase project
+// (Firestore in europe-west2/London, Google sign-in enabled, security
+// rules published, www.workwellcards.com added as an authorized domain).
 
 window.WW_FIREBASE_CONFIG = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBM9sRZbt8C5DV5i1sp-tdvLDDgjkk9xf8",
+  authDomain: "workwell-rituals.firebaseapp.com",
+  projectId: "workwell-rituals",
+  storageBucket: "workwell-rituals.firebasestorage.app",
+  messagingSenderId: "781814282065",
+  appId: "1:781814282065:web:00846768cfe35626ec0570"
 };
