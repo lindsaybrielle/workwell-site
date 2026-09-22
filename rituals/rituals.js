@@ -137,7 +137,7 @@
     ritualIdx = idx;
     const list = allRituals();
     const r = list[idx];
-    el('ritual-number').textContent = 'No. ' + (idx + 1) + ' of ' + list.length;
+    el('ritual-number').textContent = (idx + 1) + ' / ' + list.length;
     el('ritual-icon').textContent = r.emoji;
     el('ritual-title').textContent = r.title;
     el('ritual-desc').textContent = r.desc;
@@ -147,7 +147,7 @@
     processIdx = idx;
     const list = allProcesses();
     const p = list[idx];
-    el('process-number').textContent = 'No. ' + (idx + 1) + ' of ' + list.length;
+    el('process-number').textContent = (idx + 1) + ' / ' + list.length;
     el('process-icon').textContent = p.emoji;
     el('process-title').textContent = p.title;
     el('process-desc').textContent = p.desc;

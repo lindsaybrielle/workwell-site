@@ -29,7 +29,7 @@
     <div>
       <div class="eyebrow">Borrow a ritual, reshape your workday</div>
       <h1>Rituals</h1>
-      <p class="lede">Draw a ritual and a work moment. Find the one thing worth borrowing from the ritual, and sketch how it would actually work — 50 of each, built with civil servants and everyday professionals in mind.</p>
+      <p class="lede">Draw a ritual from history and a moment from your workweek. Find the one thing worth borrowing from the ritual, and sketch how it would actually work.</p>
     </div>
     <div class="r-collage" aria-hidden="true">
       <span class="r-bubble r-b1">💍</span>
@@ -45,46 +45,68 @@
 
 <section class="section" id="draw">
   <div class="wrap">
+    <div class="r-draw-intro">
+      <button class="r-combine" id="draw-combo">
+        <span class="r-combine-icon" aria-hidden="true">&#127922;</span>
+        <span>
+          <span class="r-combine-title">Draw a combination</span>
+          <span class="r-combine-sub">New ritual + new work moment, together</span>
+        </span>
+      </button>
+    </div>
+
     <div class="r-grid">
       <div class="r-card ritual-card">
-        <div class="r-kicker">Rituals</div>
-        <div class="r-number" id="ritual-number">No. 1 of 50</div>
-        <div class="r-icon" id="ritual-icon">&nbsp;</div>
-        <h3 id="ritual-title">&nbsp;</h3>
-        <p id="ritual-desc">&nbsp;</p>
-        <button class="btn btn-sage btn-sm" id="draw-ritual">&#8635; Draw new ritual</button>
-
-        <button class="r-add-toggle" id="toggle-add-ritual" aria-expanded="false">+ Add a ritual</button>
-        <form class="r-add-form" id="add-ritual-form" hidden>
-          <input type="text" id="new-ritual-name" placeholder="Ritual name" required maxlength="60">
-          <input type="text" id="new-ritual-desc" placeholder="One line describing it (optional)" maxlength="160">
-          <input type="text" id="new-ritual-borrow" placeholder="One thing worth borrowing from it" maxlength="160">
-          <div class="r-add-actions">
-            <button type="submit" class="btn btn-teal btn-sm">Add ritual</button>
-            <button type="button" class="btn btn-ghost btn-sm" id="cancel-add-ritual">Cancel</button>
+        <div class="r-card-top">
+          <div class="r-kicker">Ritual</div>
+          <div class="r-number" id="ritual-number">1 / 50</div>
+        </div>
+        <div class="r-card-main">
+          <div class="r-icon-chip" id="ritual-icon">&nbsp;</div>
+          <div class="r-card-text">
+            <h3 id="ritual-title">&nbsp;</h3>
+            <p id="ritual-desc">&nbsp;</p>
           </div>
-        </form>
+        </div>
+        <div class="r-card-footer">
+          <button class="btn btn-sage btn-sm" id="draw-ritual">&#8635; New ritual</button>
+          <button class="r-add-toggle" id="toggle-add-ritual" aria-expanded="false">+ Add a ritual</button>
+          <form class="r-add-form" id="add-ritual-form" hidden>
+            <input type="text" id="new-ritual-name" placeholder="Ritual name" required maxlength="60">
+            <input type="text" id="new-ritual-desc" placeholder="One line describing it (optional)" maxlength="160">
+            <input type="text" id="new-ritual-borrow" placeholder="One thing worth borrowing from it" maxlength="160">
+            <div class="r-add-actions">
+              <button type="submit" class="btn btn-teal btn-sm">Add ritual</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="cancel-add-ritual">Cancel</button>
+            </div>
+          </form>
+        </div>
       </div>
 
-      <button class="r-combine btn btn-mustard" id="draw-combo">&#127922; Draw a combination</button>
-
       <div class="r-card process-card">
-        <div class="r-kicker">Work moments</div>
-        <div class="r-number" id="process-number">No. 1 of 50</div>
-        <div class="r-icon" id="process-icon">&nbsp;</div>
-        <h3 id="process-title">&nbsp;</h3>
-        <p id="process-desc">&nbsp;</p>
-        <button class="btn btn-teal btn-sm" id="draw-process">&#8635; Draw new work moment</button>
-
-        <button class="r-add-toggle" id="toggle-add-process" aria-expanded="false">+ Add a work process</button>
-        <form class="r-add-form" id="add-process-form" hidden>
-          <input type="text" id="new-process-name" placeholder="Process name" required maxlength="60">
-          <input type="text" id="new-process-desc" placeholder="One line describing it (optional)" maxlength="160">
-          <div class="r-add-actions">
-            <button type="submit" class="btn btn-teal btn-sm">Add process</button>
-            <button type="button" class="btn btn-ghost btn-sm" id="cancel-add-process">Cancel</button>
+        <div class="r-card-top">
+          <div class="r-kicker">Work moment</div>
+          <div class="r-number" id="process-number">1 / 50</div>
+        </div>
+        <div class="r-card-main">
+          <div class="r-icon-chip" id="process-icon">&nbsp;</div>
+          <div class="r-card-text">
+            <h3 id="process-title">&nbsp;</h3>
+            <p id="process-desc">&nbsp;</p>
           </div>
-        </form>
+        </div>
+        <div class="r-card-footer">
+          <button class="btn btn-teal btn-sm" id="draw-process">&#8635; New work moment</button>
+          <button class="r-add-toggle" id="toggle-add-process" aria-expanded="false">+ Add a work process</button>
+          <form class="r-add-form" id="add-process-form" hidden>
+            <input type="text" id="new-process-name" placeholder="Process name" required maxlength="60">
+            <input type="text" id="new-process-desc" placeholder="One line describing it (optional)" maxlength="160">
+            <div class="r-add-actions">
+              <button type="submit" class="btn btn-teal btn-sm">Add process</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="cancel-add-process">Cancel</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
