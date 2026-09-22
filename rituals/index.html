@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rituals — Workwell</title>
-<meta name="description" content="Draw a ritual and a work moment, and find the one thing worth borrowing. 50 rituals, 50 work moments — built with UK civil servants and everyday professionals in mind.">
+<meta name="description" content="Draw a ritual and a work moment, and find the one thing worth borrowing. 58 rituals, 50 work moments — built with UK civil servants and everyday professionals in mind.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23235f72%22/></svg>">
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="rituals.css">
@@ -32,19 +32,32 @@
       <p class="lede">Draw a ritual from history and a moment from your workweek. Find the one thing worth borrowing from the ritual, and sketch how it would actually work.</p>
     </div>
     <div class="r-collage" aria-hidden="true">
-      <span class="r-bubble r-b1">💍</span>
-      <span class="r-bubble r-b2">🥁</span>
-      <span class="r-bubble r-b3">🍵</span>
-      <span class="r-bubble r-b4">🔔</span>
-      <span class="r-bubble r-b5">🥂</span>
-      <span class="r-bubble r-b6">🕊️</span>
-      <svg class="r-bubble r-b7" id="collage-mascot" viewBox="0 0 200 240" data-mascot="breathe"></svg>
+      <div class="r-collage-ring"></div>
+      <svg class="r-collage-mascot" id="collage-mascot" viewBox="0 0 200 240" data-mascot="breathe"></svg>
     </div>
   </div>
 </header>
 
 <section class="section" id="draw">
   <div class="wrap">
+    <div class="r-principles">
+      <div class="r-principle">
+        <div class="r-principle-num">01</div>
+        <h4>Keep it simple</h4>
+        <p>A ritual that needs a manual won't survive a busy week. The best ones take seconds.</p>
+      </div>
+      <div class="r-principle">
+        <div class="r-principle-num">02</div>
+        <h4>Know who and what it's for</h4>
+        <p>A ritual borrowed without a clear purpose is just a gimmick. Be specific about the moment it serves.</p>
+      </div>
+      <div class="r-principle">
+        <div class="r-principle-num">03</div>
+        <h4>Think outside the box</h4>
+        <p>Strange ideas make memorable rituals. Don't discard a combination just because it feels unlikely.</p>
+      </div>
+    </div>
+
     <div class="r-draw-intro">
       <button class="r-combine" id="draw-combo">
         <span class="r-combine-icon" aria-hidden="true">&#127922;</span>
@@ -53,6 +66,17 @@
           <span class="r-combine-sub">New ritual + new work moment, together</span>
         </span>
       </button>
+      <div class="r-filter-row">
+        <label for="ritual-filter">Draw rituals from:</label>
+        <select id="ritual-filter">
+          <option value="all">All rituals</option>
+          <option value="public-sector">Public sector &amp; ceremony</option>
+          <option value="cultural">Cultural &amp; religious</option>
+          <option value="life-event">Life events</option>
+          <option value="everyday">Everyday moments</option>
+          <option value="sport">Sport &amp; competition</option>
+        </select>
+      </div>
     </div>
 
     <div class="r-grid">
@@ -121,18 +145,60 @@
       </div>
 
       <label for="try-input">What would you actually try?</label>
-      <div class="r-example" id="r-example">For example: &ldquo;Before our next Select Committee hearing, we'll do a two-minute silent read-through of the brief together, like a pre-service pause, before anyone speaks.&rdquo;</div>
+      <div class="r-example" id="r-example">&nbsp;</div>
       <textarea id="try-input" rows="3" placeholder="Sketch how this would actually work in your next standup, launch, retro..."></textarea>
       <div class="r-actions">
         <button class="btn btn-ghost btn-sm" id="copy-answer">Copy my answer</button>
+        <button class="btn btn-outline-sage btn-sm" id="save-local">Save without signing in</button>
         <button class="btn btn-sage btn-sm" id="save-answer">Save to my list</button>
       </div>
       <p class="r-note" id="r-status">Saved privately in this browser &mdash; nothing here is shared publicly.</p>
+      <p class="r-note r-mylist-explainer">"My list" is a personal collection tied to your Google account &mdash; only you can see it, it follows you across devices, and it's never shown to anyone else. Prefer to skip the Google prompt? Use "Save without signing in" to keep your list on just this device instead.</p>
     </div>
 
     <div class="r-saved" id="saved-section" hidden>
       <div class="eyebrow">Your saved combinations</div>
       <div id="saved-list"></div>
+    </div>
+
+    <div class="r-room" id="room-section">
+      <div class="eyebrow">In the room together?</div>
+      <h2 class="r-room-title">Start a shared board for your session</h2>
+      <p class="r-room-lede">Get a short code, share it with the room, and watch everyone's combinations land on one shared board &mdash; vote on favourites, then export a shortlist. No sign-in needed for anyone.</p>
+
+      <div class="r-room-setup" id="room-setup">
+        <div class="r-room-setup-col">
+          <h4>Start a new room</h4>
+          <button class="btn btn-mustard btn-sm" id="room-start-btn">Start a room</button>
+        </div>
+        <div class="r-room-setup-col">
+          <h4>Join an existing room</h4>
+          <div class="r-room-join">
+            <input type="text" id="room-join-input" placeholder="Enter code, e.g. AB3XZ" maxlength="6">
+            <button class="btn btn-teal btn-sm" id="room-join-btn">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="r-room-active" id="room-active" hidden>
+        <div class="r-room-code-row">
+          <div class="r-room-code">
+            <span class="r-room-code-label">Room code</span>
+            <span class="r-room-code-value" id="room-code-display">&nbsp;</span>
+          </div>
+          <button class="r-room-leave" id="room-leave-btn">Leave room</button>
+        </div>
+
+        <div class="r-room-share">
+          <input type="text" id="room-name-input" placeholder="Your name (optional)" maxlength="40">
+          <button class="btn btn-mustard btn-sm" id="room-share-btn">Share my current combination</button>
+        </div>
+        <p class="r-note" id="room-status"></p>
+
+        <div class="r-room-board" id="room-board"></div>
+
+        <button class="btn btn-ghost btn-sm" id="room-export-btn">Copy shortlist</button>
+      </div>
     </div>
   </div>
 </section>
