@@ -113,6 +113,9 @@
   let processIdx = 0;
   let currentUser = null;
   let db = null;
+  let auth = null;
+  let ritualQueue = [];
+  let processQueue = [];
 
   const el = (id) => document.getElementById(id);
 
@@ -126,18 +129,33 @@
   function allRituals() { return RITUALS_BASE.concat(loadJSON(CUSTOM_RITUALS_KEY)); }
   function allProcesses() { return PROCESSES_BASE.concat(loadJSON(CUSTOM_PROCESSES_KEY)); }
 
-  function randomIndexExcluding(length, exclude) {
-    if (length <= 1) return 0;
-    let i;
-    do { i = Math.floor(Math.random() * length); } while (i === exclude);
-    return i;
+  // Shuffle-bag draw: work through every option in a random order before any repeat.
+  function shuffledIndices(length) {
+    const arr = Array.from({ length }, (_, i) => i);
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
   }
+
+  function nextFromQueue(queue, length, currentIdx) {
+    if (queue.length === 0) {
+      queue.push.apply(queue, shuffledIndices(length));
+      if (queue.length > 1 && queue[0] === currentIdx) {
+        const tmp = queue[0]; queue[0] = queue[1]; queue[1] = tmp;
+      }
+    }
+    return queue.shift();
+  }
+
+  function nextRitualIndex() { return nextFromQueue(ritualQueue, allRituals().length, ritualIdx); }
+  function nextProcessIndex() { return nextFromQueue(processQueue, allProcesses().length, processIdx); }
 
   function renderRitual(idx) {
     ritualIdx = idx;
     const list = allRituals();
     const r = list[idx];
-    el('ritual-number').textContent = (idx + 1) + ' / ' + list.length;
     el('ritual-icon').textContent = r.emoji;
     el('ritual-title').textContent = r.title;
     el('ritual-desc').textContent = r.desc;
@@ -147,7 +165,6 @@
     processIdx = idx;
     const list = allProcesses();
     const p = list[idx];
-    el('process-number').textContent = (idx + 1) + ' / ' + list.length;
     el('process-icon').textContent = p.emoji;
     el('process-title').textContent = p.title;
     el('process-desc').textContent = p.desc;
@@ -166,7 +183,13 @@
       list.appendChild(li);
     });
     el('try-input').value = '';
-    setStatus(currentUser ? 'Signed in — saves sync to your account.' : 'Saved privately in this browser — nothing here is shared publicly.');
+    if (currentUser) {
+      setStatus('Signed in — saves sync to your account.');
+    } else if (firebaseConfigured()) {
+      setStatus('Click "Save to my list" to sign in with Google and save this.');
+    } else {
+      setStatus('Saved privately in this browser — nothing here is shared publicly.');
+    }
   }
 
   function setStatus(msg) { el('r-status').textContent = msg; }
@@ -237,16 +260,16 @@
 
   // ---------- draw controls ----------
   el('draw-ritual').addEventListener('click', () => {
-    renderRitual(randomIndexExcluding(allRituals().length, ritualIdx));
+    renderRitual(nextRitualIndex());
     updateCombo();
   });
   el('draw-process').addEventListener('click', () => {
-    renderProcess(randomIndexExcluding(allProcesses().length, processIdx));
+    renderProcess(nextProcessIndex());
     updateCombo();
   });
   el('draw-combo').addEventListener('click', () => {
-    renderRitual(randomIndexExcluding(allRituals().length, ritualIdx));
-    renderProcess(randomIndexExcluding(allProcesses().length, processIdx));
+    renderRitual(nextRitualIndex());
+    renderProcess(nextProcessIndex());
     updateCombo();
   });
 
@@ -271,12 +294,42 @@
     const r = allRituals()[ritualIdx];
     const p = allProcesses()[processIdx];
     const note = el('try-input').value.trim();
+    const saveBtn = el('save-answer');
+
+    if (firebaseConfigured() && auth && !currentUser) {
+      setStatus('Opening Google sign-in…');
+      saveBtn.disabled = true;
+      try {
+        const result = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        currentUser = result.user;
+      } catch (err) {
+        saveBtn.disabled = false;
+        setStatus('Sign-in didn’t finish, so this wasn’t saved. Click Save to try again.');
+        return;
+      }
+      saveBtn.disabled = false;
+    }
+
     const list = await getSavedList();
     list.push({ ritual: r.emoji + ' ' + r.title, process: p.emoji + ' ' + p.title, note, date: new Date().toISOString() });
     await persistSavedList(list);
+    logSubmission(r, p, note);
     renderSavedList();
     setStatus(currentUser ? 'Saved to your account.' : 'Saved to your list below (this browser only).');
   });
+
+  function logSubmission(r, p, note) {
+    if (!db || !currentUser) return;
+    db.collection('submissions').add({
+      uid: currentUser.uid,
+      name: currentUser.displayName || '',
+      email: currentUser.email || '',
+      ritual: r.title,
+      process: p.title,
+      note: note,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).catch((err) => console.warn('Submission log failed', err));
+  }
 
   // ---------- add your own ----------
   function wireAddForm(toggleId, formId, cancelId, onSubmit) {
@@ -312,6 +365,7 @@
     const custom = loadJSON(CUSTOM_RITUALS_KEY);
     custom.push({ emoji: '✨', title: name, desc: desc, borrow: borrow ? [borrow] : ['Whatever made this worth adding — try naming it next time.'] });
     saveJSON(CUSTOM_RITUALS_KEY, custom);
+    ritualQueue = [];
     renderRitual(allRituals().length - 1);
     updateCombo();
     setStatus('Added "' + name + '" to the ritual pool on this device.');
@@ -324,6 +378,7 @@
     const custom = loadJSON(CUSTOM_PROCESSES_KEY);
     custom.push({ emoji: '✨', title: name, desc: desc });
     saveJSON(CUSTOM_PROCESSES_KEY, custom);
+    processQueue = [];
     renderProcess(allProcesses().length - 1);
     updateCombo();
     setStatus('Added "' + name + '" to the work moment pool on this device.');
@@ -336,37 +391,15 @@
   }
 
   function initFirebase() {
-    const signinBtn = el('signin-btn');
-    const statusEl = el('r-account-status');
-
-    if (!firebaseConfigured() || typeof firebase === 'undefined') {
-      signinBtn.disabled = true;
-      statusEl.textContent = 'Sign-in isn’t set up on this site yet — saves stay in this browser for now.';
-      return;
-    }
+    if (!firebaseConfigured() || typeof firebase === 'undefined') return;
 
     firebase.initializeApp(window.WW_FIREBASE_CONFIG);
     db = firebase.firestore();
-    const auth = firebase.auth();
+    auth = firebase.auth();
 
     auth.onAuthStateChanged((user) => {
       currentUser = user;
-      if (user) {
-        statusEl.innerHTML = 'Signed in as <strong>' + escapeHtml(user.displayName || user.email) + '</strong> — <button class="r-signout" id="signout-btn">Sign out</button>';
-        signinBtn.hidden = true;
-        el('signout-btn').addEventListener('click', () => auth.signOut());
-      } else {
-        statusEl.textContent = 'Sign in to sync your saved list across devices.';
-        signinBtn.hidden = false;
-      }
       renderSavedList();
-    });
-
-    signinBtn.addEventListener('click', () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider).catch((err) => {
-        statusEl.textContent = 'Sign-in didn’t complete: ' + (err && err.message ? err.message : 'please try again.');
-      });
     });
   }
 

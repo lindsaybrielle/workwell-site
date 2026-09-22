@@ -49,7 +49,6 @@
 .r-kicker { font-weight: 700; font-size: 0.68rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--rose-deep); }
 .ritual-card .r-kicker { color: var(--sage); }
 .process-card .r-kicker { color: var(--teal-mid); }
-.r-number { font-size: 0.72rem; font-weight: 600; opacity: 0.5; font-variant-numeric: tabular-nums; }
 
 .r-card-main { display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
 .r-icon-chip {
@@ -112,21 +111,6 @@
 }
 .r-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
 .r-note { font-size: 0.78rem; opacity: 0.65; margin-top: 12px; }
-
-/* ---------- sign-in ---------- */
-.r-account { display: flex; align-items: center; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); flex-wrap: wrap; }
-.r-signin-btn {
-  all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 10px;
-  border: 1.5px solid var(--line); border-radius: 999px; padding: 9px 16px 9px 10px;
-  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.86rem; background: var(--paper-card);
-  transition: border-color 0.15s ease;
-}
-.r-signin-btn:hover { border-color: var(--teal-mid); }
-.r-signin-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.r-signin-btn svg { width: 18px; height: 18px; flex: none; }
-.r-account-status { font-size: 0.84rem; opacity: 0.8; }
-.r-account-status strong { color: var(--teal); }
-.r-signout { all: unset; cursor: pointer; font-size: 0.8rem; color: var(--rose-deep); font-weight: 600; text-decoration: underline; }
 
 /* ---------- saved list ---------- */
 .r-saved { max-width: 720px; margin: 32px auto 0; }
