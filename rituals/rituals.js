@@ -116,7 +116,7 @@
 
   const TAG_LABELS = {
     'public-sector': 'Public sector & ceremony',
-    cultural: 'Cultural & religious',
+    cultural: 'Cultural',
     'life-event': 'Life events',
     everyday: 'Everyday moments',
     sport: 'Sport & competition'
