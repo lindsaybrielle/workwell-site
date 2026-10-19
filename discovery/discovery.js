@@ -41,10 +41,116 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function renderMascot(svg, pose) {
+  // ---------- archetype figures + intro wheel ----------
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  function svgEl(tag, attrs, parent) {
+    const e = document.createElementNS(SVG_NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+
+  // Each archetype gets the Workwell character in its own pose, plus a small
+  // line-drawn prop in the style of the card illustrations. Coordinates are in
+  // the character's 200x240 drawing space.
+  const PROPS = {
+    flow(g) {
+      svgEl('circle', { cx: 178, cy: 34, r: 11 }, g);
+      for (let i = 0; i < 8; i++) {
+        const t = i * Math.PI / 4;
+        svgEl('line', { x1: 178 + Math.cos(t) * 17, y1: 34 + Math.sin(t) * 17, x2: 178 + Math.cos(t) * 24, y2: 34 + Math.sin(t) * 24 }, g);
+      }
+    },
+    sprinter(g) {
+      svgEl('path', { d: 'M-16,96 h30 M-8,120 h26 M-16,144 h30' }, g);
+    },
+    ember(g) {
+      svgEl('path', { d: 'M180,64 C160,54 164,34 176,18 C177,32 186,34 187,24 C200,38 199,58 180,64 Z' }, g);
+    },
+    fog(g) {
+      svgEl('path', { d: 'M150,48 a12,12 0 0 1 10,-18 a15,15 0 0 1 28,4 a10,10 0 0 1 2,20 Z' }, g);
+      svgEl('path', { d: 'M146,66 q12,6 24,0 q12,-6 24,0' }, g);
+    }
+  };
+
+  function drawFigure(svg, key, pose) {
     if (!svg || !window.WWMascot) return;
+    svg.setAttribute('viewBox', '-24 -6 248 252');
     if (pose === 'release') window.WWMascot.render(svg, 'clench', 'release');
     else window.WWMascot.render(svg, pose);
+    svg.insertBefore(svgEl('circle', { cx: 100, cy: 128, r: 98, class: 'fig-halo' }), svg.firstChild);
+    if (PROPS[key]) PROPS[key](svgEl('g', { class: 'fig-prop' }, svg));
+  }
+
+  // Quadrants run clockwise from the top: degrees are measured from 12 o'clock.
+  const WHEEL = [['sprinter', 270, 360], ['flow', 0, 90], ['ember', 90, 180], ['fog', 180, 270]];
+  const CX = 200, CY = 200;
+  function pt(r, deg) {
+    const t = deg * Math.PI / 180;
+    return [CX + r * Math.sin(t), CY - r * Math.cos(t)];
+  }
+  function ring(r0, r1, a0, a1) {
+    const [ax, ay] = pt(r0, a0), [bx, by] = pt(r1, a0), [cx, cy] = pt(r1, a1), [dx, dy] = pt(r0, a1);
+    return 'M' + ax + ',' + ay + ' L' + bx + ',' + by + ' A' + r1 + ',' + r1 + ' 0 0 1 ' + cx + ',' + cy +
+      ' L' + dx + ',' + dy + ' A' + r0 + ',' + r0 + ' 0 0 0 ' + ax + ',' + ay + ' Z';
+  }
+
+  function buildWheel() {
+    const svg = document.getElementById('wheel');
+    const caption = document.getElementById('wheel-caption');
+    if (!svg) return;
+    svg.innerHTML = '';
+    const defs = svgEl('defs', {}, svg);
+    const segs = {};
+
+    WHEEL.forEach(([key, a0, a1]) => {
+      const a = content.archetypes[key];
+      const mid = (a0 + a1) / 2;
+      const g = svgEl('g', { class: 'w-seg', tabindex: '0', role: 'button', 'aria-label': a.name + ': ' + a.tagline }, svg);
+      g.style.setProperty('--dx', (Math.sin(mid * Math.PI / 180) * 14).toFixed(1) + 'px');
+      g.style.setProperty('--dy', (-Math.cos(mid * Math.PI / 180) * 14).toFixed(1) + 'px');
+      svgEl('path', { d: ring(60, 184, a0, a1), fill: a.color, class: 'w-outer' }, g);
+      svgEl('path', { d: ring(60, 94, a0, a1), class: 'w-inner' }, g);
+
+      // Labels on the lower half run the other way round so they read upright.
+      const bottom = mid > 90 && mid < 270;
+      const r = bottom ? 83 : 72;
+      const [sx, sy] = pt(r, bottom ? a1 - 4 : a0 + 4);
+      const [ex, ey] = pt(r, bottom ? a0 + 4 : a1 - 4);
+      svgEl('path', { id: 'wl-' + key, d: 'M' + sx + ',' + sy + ' A' + r + ',' + r + ' 0 0 ' + (bottom ? 0 : 1) + ' ' + ex + ',' + ey, fill: 'none' }, defs);
+      const label = svgEl('textPath', { href: '#wl-' + key, startOffset: '50%', 'text-anchor': 'middle' }, svgEl('text', { class: 'w-label' }, g));
+      label.textContent = a.name;
+
+      const [fx, fy] = pt(140, mid);
+      drawFigure(svgEl('svg', { x: fx - 46, y: fy - 47, width: 92, height: 94, class: 'w-fig', 'aria-hidden': 'true' }, g), key, a.mascot);
+      segs[key] = g;
+    });
+
+    svgEl('circle', { cx: CX, cy: CY, r: 60, class: 'w-hub' }, svg);
+    svgEl('text', { x: CX, y: CY - 4, class: 'w-hub-t' }, svg).textContent = 'Team';
+    svgEl('text', { x: CX, y: CY + 20, class: 'w-hub-t' }, svg).textContent = 'Weather';
+
+    const order = ['flow', 'ember', 'fog', 'sprinter'];
+    let i = 0, timer = null;
+    const activate = key => {
+      Object.keys(segs).forEach(k => segs[k].classList.toggle('is-active', k === key));
+      const a = content.archetypes[key];
+      caption.innerHTML = '<strong>' + esc(a.name) + '</strong> &middot; ' + esc(a.tagline);
+      i = order.indexOf(key);
+    };
+    const stop = () => { clearInterval(timer); timer = null; };
+    Object.keys(segs).forEach(k => {
+      segs[k].addEventListener('mouseenter', () => { stop(); activate(k); });
+      segs[k].addEventListener('focus', () => { stop(); activate(k); });
+      segs[k].addEventListener('click', () => { stop(); activate(k); });
+    });
+    activate('flow');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      timer = setInterval(() => {
+        if (screens.intro.hidden) return stop();
+        activate(order[(i + 1) % order.length]);
+      }, 2800);
+    }
   }
 
   // ---------- logging (no cookies; a random id per run of the quiz) ----------
@@ -309,7 +415,7 @@
         '<div class="wrap d-res-grid">' +
           '<div>' +
             '<div class="eyebrow">' + (team ? 'Your team reads as' : 'Your result') + '</div>' +
-            '<div class="d-res-title"><svg class="d-res-mascot" viewBox="0 0 200 240" id="res-mascot" aria-hidden="true"></svg><h1>' + esc(a.name) + '</h1></div>' +
+            '<div class="d-res-title"><svg class="d-res-mascot" id="res-mascot" aria-hidden="true"></svg><h1>' + esc(a.name) + '</h1></div>' +
             '<p class="d-res-tag">' + esc(a.tagline) + '</p>' +
             '<p class="d-res-summary">' + esc(copy.summary) + '</p>' +
           '</div>' +
@@ -429,7 +535,7 @@
       '</div>' +
       '<div class="wrap"><p class="d-sent" id="sent-note" role="status" hidden></p></div>';
 
-    renderMascot(document.getElementById('res-mascot'), a.mascot);
+    drawFigure(document.getElementById('res-mascot'), s.archetype, a.mascot);
     document.getElementById('gate-form').addEventListener('submit', onUnlock);
     document.getElementById('print-btn').addEventListener('click', () => window.print());
     document.getElementById('retake-btn').addEventListener('click', () => {
@@ -530,7 +636,7 @@
   startBtn.disabled = true;
   fetch('content.json', { cache: 'no-cache' })
     .then(r => r.json())
-    .then(data => { content = data; startBtn.disabled = false; })
+    .then(data => { content = data; startBtn.disabled = false; buildWheel(); })
     .catch(() => {
       startBtn.textContent = 'Couldn’t load the discovery. Please refresh.';
     });

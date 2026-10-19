@@ -423,8 +423,8 @@
 
   "teamWeather": {
     "intro": {
-      "self": "Team Weather is the climate you share with the people around you. Each of us has our own nervous system, and teams develop a shared emotional climate too, shaped by safety, rhythm and how people pick up on each other.",
-      "team": "Team Weather is your team's shared climate. Each of us has our own nervous system, and teams develop a shared emotional climate too, shaped by safety, rhythm and how people pick up on each other."
+      "self": "Each of us has our own nervous system, and the people we work with form a collective one. Team Weather reads how that collective nervous system is holding up: how safe it feels, how moods travel and how well people recover together.",
+      "team": "Each of us has our own nervous system, and a team forms a collective one. Team Weather reads how your team's collective nervous system is holding up: how safe it feels, how moods travel and how well people recover together."
     },
     "readings": {
       "clear": {

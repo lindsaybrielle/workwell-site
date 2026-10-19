@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Discovery — Workwell</title>
 <link rel="canonical" href="https://www.workwellcards.com/discovery/">
-<meta name="description" content="A free 4-minute discovery for individuals and teams. Find your place on the Energy × Meaning map, read your Team Weather, and get three practices matched to your result.">
+<meta name="description" content="A free discovery quiz for individual contributors and team leaders. Find out what's fuelling your performance at work, what's draining it, and read your Team Weather.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23235f72%22/></svg>">
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="discovery.css">
@@ -34,26 +34,20 @@
   <section class="d-screen d-intro" id="screen-intro">
     <div class="wrap d-intro-grid">
       <div>
-        <div class="eyebrow">Workwell Discovery &middot; free</div>
-        <h1>What's your work weather?</h1>
-        <p class="lede">A 4-minute discovery for you or your team. Find out what's fuelling performance at work, what's draining it, and what to try next.</p>
+        <h1>Discover and understand your team's weather</h1>
+        <p class="lede">A free discovery quiz to find out what's fuelling your performance at work, what's draining it, and what to try for more energy and meaning in your work. Made for individual contributors and team leaders.</p>
         <ul class="d-outcomes">
-          <li><strong>Your archetype</strong> on the Energy &times; Meaning map</li>
-          <li><strong>Your Team Weather</strong>: the climate you share with the people around you</li>
-          <li><strong>Three practices</strong> matched to your result</li>
+          <li><strong>Your archetype</strong>, and what's behind it</li>
+          <li><strong>Your Team Weather</strong>: how your team's collective nervous system is holding up</li>
+          <li><strong>Three sample practices</strong> matched to your archetype</li>
           <li><strong>A PDF copy</strong> emailed to you to keep</li>
         </ul>
         <button class="btn btn-mustard" id="start-btn" type="button">Start the discovery</button>
-        <p class="d-fine">12 questions &middot; about 4 minutes &middot; no account needed</p>
+        <p class="d-fine">12 questions &middot; about 4 minutes &middot; free &middot; no account needed</p>
       </div>
-      <div class="d-intro-art" aria-hidden="true">
-        <div class="d-map-preview">
-          <span class="q q-sprinter">Sprinter</span>
-          <span class="q q-flow">Flow</span>
-          <span class="q q-fog">Fog</span>
-          <span class="q q-ember">Ember</span>
-          <svg class="d-intro-mascot" viewBox="0 0 200 240" data-mascot="reflect"></svg>
-        </div>
+      <div class="d-intro-art">
+        <svg class="d-wheel" id="wheel" viewBox="0 0 400 400" role="img" aria-label="The four Workwell archetypes: Sprinter, Flow, Ember and Fog"></svg>
+        <p class="d-wheel-caption" id="wheel-caption" aria-live="polite"></p>
       </div>
     </div>
   </section>
