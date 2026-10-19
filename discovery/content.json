@@ -1,0 +1,481 @@
+{
+  "version": "2026-10-beta",
+
+  "links": {
+    "site": "https://www.workwellcards.com/discovery/",
+    "calendly": "https://calendly.com/strouse",
+    "contactEmail": "brielle@strousehouse.co",
+    "etsyRestore": "https://www.etsy.com/uk/listing/1870040434/energizing-mindfulness-at-work-cards",
+    "etsyConnection": "https://www.etsy.com/uk/listing/4389802014/mindful-connection-at-work-cards-50",
+    "discountCode": "",
+    "discountLabel": ""
+  },
+  "scales": {
+    "agree": [
+      { "label": "Strongly disagree", "score": 0 },
+      { "label": "Disagree", "score": 1 },
+      { "label": "Not sure", "score": 2 },
+      { "label": "Agree", "score": 3 },
+      { "label": "Strongly agree", "score": 4 }
+    ]
+  },
+
+  "questions": [
+    {
+      "id": "context",
+      "type": "single",
+      "section": "About you",
+      "self": {
+        "text": "Which best describes your work right now?",
+        "options": [
+          { "value": "lead", "label": "I lead or manage a team" },
+          { "value": "member", "label": "I'm part of a team" },
+          { "value": "solo", "label": "I mostly work independently" },
+          { "value": "founder", "label": "I run my own business or freelance" }
+        ]
+      },
+      "team": {
+        "text": "How many people are in the team you're thinking about?",
+        "options": [
+          { "value": "2-4", "label": "2–4 people" },
+          { "value": "5-20", "label": "5–20 people" },
+          { "value": "21-40", "label": "21–40 people" },
+          { "value": "41-75", "label": "41–75 people" },
+          { "value": "76+", "label": "76 or more" }
+        ]
+      }
+    },
+    {
+      "id": "e1",
+      "type": "single",
+      "axis": "energy",
+      "section": "Energy",
+      "self": {
+        "text": "How do you usually feel on a Sunday evening, thinking about the week ahead?",
+        "options": [
+          { "label": "Ready. I'm quietly looking forward to it", "score": 3 },
+          { "label": "Fine. A bit of admin in my head, nothing heavy", "score": 2 },
+          { "label": "A low hum of dread I can't quite shake", "score": 1 },
+          { "label": "Heavy. It takes over my evening", "score": 0 }
+        ]
+      },
+      "team": {
+        "text": "Picture your team on a Sunday evening. How do you think most of them feel about the week ahead?",
+        "options": [
+          { "label": "Ready. Quietly looking forward to it", "score": 3 },
+          { "label": "Fine. A bit of admin on their minds, nothing heavy", "score": 2 },
+          { "label": "A low hum of dread", "score": 1 },
+          { "label": "Heavy. The week is already weighing on them", "score": 0 }
+        ]
+      }
+    },
+    {
+      "id": "e2",
+      "type": "single",
+      "axis": "energy",
+      "section": "Energy",
+      "self": {
+        "text": "When you get home or close the laptop, how much of you is left?",
+        "options": [
+          { "label": "Plenty. I have energy for the people and things I love", "score": 3 },
+          { "label": "Enough. A little tired, but present", "score": 2 },
+          { "label": "Not much. I'm mostly recovering", "score": 1 },
+          { "label": "Nothing. I'm running on empty", "score": 0 }
+        ]
+      },
+      "team": {
+        "text": "By the end of a typical week, how does your team seem?",
+        "options": [
+          { "label": "Still buzzing", "score": 3 },
+          { "label": "Tired, but steady", "score": 2 },
+          { "label": "Flat and drained", "score": 1 },
+          { "label": "Running on empty", "score": 0 }
+        ]
+      }
+    },
+    {
+      "id": "e3",
+      "type": "single",
+      "axis": "energy",
+      "section": "Energy",
+      "self": {
+        "text": "Outside working hours, how easily can you switch off from work?",
+        "options": [
+          { "label": "Easily. Work stays at work", "score": 3 },
+          { "label": "Mostly, with the odd check-in", "score": 2 },
+          { "label": "Rarely. It follows me around", "score": 1 },
+          { "label": "Never. I'm always half-on", "score": 0 }
+        ]
+      },
+      "team": {
+        "text": "Outside working hours, how well does your team switch off?",
+        "options": [
+          { "label": "Well. Evenings and weekends are protected", "score": 3 },
+          { "label": "Mostly, with the odd message", "score": 2 },
+          { "label": "Rarely. Work spills into evenings", "score": 1 },
+          { "label": "Never. Everyone is always half-on", "score": 0 }
+        ]
+      }
+    },
+    {
+      "id": "s1",
+      "type": "single",
+      "axis": "satisfaction",
+      "section": "Satisfaction",
+      "self": {
+        "text": "Looking back over the last month, how do you feel about what you've achieved?",
+        "options": [
+          { "label": "Proud. I can see the good work I've done", "score": 3 },
+          { "label": "Satisfied enough", "score": 2 },
+          { "label": "Unsure. Busy, but it's hard to see progress", "score": 1 },
+          { "label": "Frustrated. Effort isn't turning into results", "score": 0 }
+        ]
+      },
+      "team": {
+        "text": "Looking back over the last month, how does your team feel about what it has achieved?",
+        "options": [
+          { "label": "Proud. The progress is visible", "score": 3 },
+          { "label": "Satisfied enough", "score": 2 },
+          { "label": "Unsure. Busy, but progress is hard to see", "score": 1 },
+          { "label": "Frustrated. Effort isn't turning into results", "score": 0 }
+        ]
+      }
+    },
+    {
+      "id": "m1",
+      "type": "agree",
+      "axis": "meaning",
+      "facet": "coherence",
+      "section": "Meaning",
+      "self": { "text": "I understand how my work fits together and where it's heading." },
+      "team": { "text": "My team understands how our work fits together and where it's heading." }
+    },
+    {
+      "id": "m2",
+      "type": "agree",
+      "axis": "meaning",
+      "facet": "significance",
+      "section": "Meaning",
+      "self": { "text": "My work makes a real difference to someone." },
+      "team": { "text": "People on my team can see the difference their work makes." }
+    },
+    {
+      "id": "m3",
+      "type": "agree",
+      "axis": "meaning",
+      "facet": "purpose",
+      "section": "Meaning",
+      "self": { "text": "I'm working towards goals I genuinely care about." },
+      "team": { "text": "My team is working towards goals we genuinely care about." }
+    },
+    {
+      "id": "c1",
+      "type": "agree",
+      "axis": "connection",
+      "section": "Connection",
+      "self": { "text": "I feel I belong with the people I work with." },
+      "team": { "text": "People on my team feel they belong here." }
+    },
+    {
+      "id": "c2",
+      "type": "agree",
+      "axis": "connection",
+      "section": "Connection",
+      "self": { "text": "I can raise a concern or admit a mistake without it being held against me." },
+      "team": { "text": "People on my team can raise concerns or admit mistakes without it being held against them." }
+    },
+    {
+      "id": "enablers",
+      "type": "multi",
+      "max": 3,
+      "section": "Working at your best",
+      "self": { "text": "What needs to be true for you to work at your best?", "hint": "Choose your top 3." },
+      "team": { "text": "What needs to be true for your team to work at its best?", "hint": "Choose the top 3." },
+      "options": [
+        { "value": "clarity", "label": "Clear priorities" },
+        { "value": "autonomy", "label": "Freedom over how the work gets done" },
+        { "value": "focus", "label": "Uninterrupted time to focus" },
+        { "value": "recovery", "label": "Real breaks and time to recover" },
+        { "value": "trust", "label": "Trust between the people involved" },
+        { "value": "appreciation", "label": "Feeling appreciated" },
+        { "value": "growth", "label": "Learning and growing" },
+        { "value": "leadership", "label": "Leadership that has our back" },
+        { "value": "flexibility", "label": "Flexibility over where and when" },
+        { "value": "mission", "label": "A mission that matters" },
+        { "value": "workload", "label": "A workload that fits the hours" },
+        { "value": "environment", "label": "A space that gives energy" }
+      ]
+    },
+    {
+      "id": "practices",
+      "type": "multi",
+      "max": 0,
+      "section": "Practices",
+      "self": { "text": "Which of these do you already use to look after yourself at work?", "hint": "Choose any that apply." },
+      "team": { "text": "Which of these does your team already use?", "hint": "Choose any that apply." },
+      "options": [
+        { "value": "breathwork", "label": "Breathwork" },
+        { "value": "movement", "label": "Movement or stretching" },
+        { "value": "mindfulness", "label": "Mindfulness or meditation" },
+        { "value": "reflection", "label": "Journaling or reflection" },
+        { "value": "gratitude", "label": "Gratitude or appreciation" },
+        { "value": "nature", "label": "Walks or time outdoors" },
+        { "value": "checkins", "label": "Check-ins or team rituals" },
+        { "value": "oneones", "label": "Wellbeing in 1:1s" },
+        { "value": "offsites", "label": "Workshops or offsites" },
+        { "value": "boundaries", "label": "Boundaries like focus time or no-meeting days" },
+        { "value": "sleep", "label": "A sleep or wind-down routine" },
+        { "value": "none", "label": "Nothing yet", "exclusive": true }
+      ]
+    }
+  ],
+
+  "enablerTips": {
+    "clarity": "Name the one outcome that matters most this week and let it decide what waits.",
+    "autonomy": "Autonomy is one of the strongest predictors of satisfaction at work. Agree the outcome, then hand over the how.",
+    "focus": "Protect one 90-minute block a day, notifications off, and treat it like a meeting.",
+    "recovery": "Recovery works best when it's planned. Put the breaks in the calendar before the work fills it.",
+    "trust": "Trust grows through small, kept promises. Do what you said, when you said, and say it out loud.",
+    "appreciation": "Specific beats generic: name what someone did and the difference it made.",
+    "growth": "Pick one skill to stretch this quarter and ask for one piece of feedback on it each month.",
+    "leadership": "Ask for, or offer, one explicit commitment: what support looks like when things get hard.",
+    "flexibility": "Agree a few core hours together, then give real freedom around them.",
+    "mission": "Reconnect to who the work is for. One real story from a customer or colleague goes a long way.",
+    "workload": "List what's on the plate and what could come off. Sustainable pace is a team decision, not a personal failing.",
+    "environment": "Light, movement and quiet are levers. Change one thing about where the work happens this week."
+  },
+
+  "practiceLabels": {
+    "breathwork": "breathwork",
+    "movement": "movement",
+    "mindfulness": "mindfulness",
+    "reflection": "reflection",
+    "gratitude": "gratitude",
+    "nature": "time outdoors",
+    "checkins": "check-ins and rituals",
+    "oneones": "wellbeing 1:1s",
+    "offsites": "workshops and offsites",
+    "boundaries": "boundaries",
+    "sleep": "a wind-down routine"
+  },
+
+  "archetypes": {
+    "flow": {
+      "name": "Flow",
+      "tagline": "Energised and aligned",
+      "color": "#6f9868",
+      "mascot": "release",
+      "self": {
+        "summary": "You have energy in the tank and you know why the work matters. This is the state most people are chasing: work that feels purposeful without draining you dry.",
+        "detail": "Flow is valuable and it can be fragile. It usually rests on a handful of conditions, like a protected rhythm, people you trust and a clear sense of purpose. When those slip, energy is often the first thing to go. The opportunity is to understand what's keeping you here, so you can protect it on purpose and help others find it too.",
+        "outcome": "Use your result to notice what your best weeks have in common, and build those conditions into the weeks that aren't."
+      },
+      "team": {
+        "summary": "Your team has energy and a shared sense of why the work matters. People are bringing their best and getting something back from it.",
+        "detail": "Teams in Flow are a real asset, and they are easy to take for granted. Flow tends to rest on a few conditions: a sustainable rhythm, trust and a clear purpose. Growth, deadlines or a change in leadership can quietly erode them. The opportunity is to name what's working, so you can protect it as the team changes.",
+        "outcome": "Use your result to turn what's working into shared habits the team can keep when pressure rises."
+      },
+      "exercises": [
+        {
+          "title": "Best-week blueprint",
+          "minutes": 10,
+          "source": "Reflection",
+          "self": "Think back to your two best working weeks this year. Write down what was true in both: how you started the day, who you spent time with, what you said no to. Circle the three conditions that mattered most and put one of them in next week's calendar.",
+          "team": "In your next team meeting, ask everyone to write down what was true in the team's best week this year. Cluster the answers and agree on three conditions you'll protect as a team."
+        },
+        {
+          "title": "Recover before you need it",
+          "minutes": 5,
+          "source": "From the Restore Pack",
+          "self": "Choose one restoring practice, like a silent meal, a walk without your phone or two minutes of slow breathing, and do it once a week while things are going well. Recovery is easier to build when you're not depleted.",
+          "team": "Pick one restoring ritual the whole team can share, like a walking meeting or a no-meetings Friday afternoon. Trial it for a month while energy is high."
+        },
+        {
+          "title": "Team Weather check-in",
+          "minutes": 5,
+          "source": "Team Weather",
+          "self": "Ask one colleague, \"What's your weather like this week?\" and share yours. Sunny, changeable, foggy, stormy. Moods spread through teams, so paying attention to the people around you helps protect the climate you're in.",
+          "team": "Open your next meeting with a one-word weather report from everyone: sunny, changeable, foggy or stormy. No fixing, just listening. Over time it becomes an early-warning system for the team."
+        }
+      ]
+    },
+
+    "sprinter": {
+      "name": "Sprinter",
+      "tagline": "Moving fast, unsure what it's for",
+      "color": "#d98c0c",
+      "mascot": "clench",
+      "self": {
+        "summary": "You have energy and you're getting things done, but the why feels thin. The days are full and the sense of direction or difference you're making isn't keeping up.",
+        "detail": "Sprinters often look fine from the outside, and they're productive and capable. The research on burnout and engagement treats energy and meaning as separate dimensions, and when meaning stays low for long enough, energy tends to follow it down. The good news is that meaning responds to small, regular reconnection: seeing who your work helps, how it fits together and what you care about.",
+        "outcome": "Use your result to reconnect your effort to a purpose, before speed turns into drift."
+      },
+      "team": {
+        "summary": "Your team has energy and delivers, but the shared why feels thin. There's a lot of motion, and less sense of direction or of the difference the work makes.",
+        "detail": "Sprinter teams often hit their numbers while quietly losing their sense of purpose. Energy without meaning is hard to sustain, and over time it can show up as disengagement, cynicism or people leaving for somewhere that feels more purposeful. Meaning grows when people see how their work fits together, who it helps and what the team is building towards.",
+        "outcome": "Use your result to reconnect the team's effort to a shared purpose people can feel."
+      },
+      "exercises": [
+        {
+          "title": "Trace the thread",
+          "minutes": 5,
+          "source": "From the Connection Pack",
+          "self": "Pick one task on today's list and ask \"Who does this help, and how?\" Then ask it again of your answer, three times. Write down where the thread ends up. That's the purpose behind the task.",
+          "team": "In your next stand-up, ask each person to name one piece of work from the week and who it helped. Keep a running list where the team can see it."
+        },
+        {
+          "title": "Find your superpower",
+          "minutes": 10,
+          "source": "From the Connection Pack",
+          "self": "Write about a recent moment at work when you felt most like yourself. What were you doing? What strength were you using? Look for one place to use that strength on purpose this week.",
+          "team": "Go round the team: each person shares a moment they felt most like themselves at work and the strength they were using. Notice where those strengths could be used more."
+        },
+        {
+          "title": "Intention before action",
+          "minutes": 2,
+          "source": "From the Restore Pack",
+          "self": "Before you open your inbox, set one intention for the day that names why rather than what. For example: \"Today I'm working so the new starters feel welcome.\" Come back to it at lunch.",
+          "team": "Start the week with a one-line headline for the team that answers \"Why does this week's work matter?\" Revisit it on Friday."
+        }
+      ]
+    },
+
+    "ember": {
+      "name": "Ember",
+      "tagline": "Cares deeply, running low",
+      "color": "#a1657f",
+      "mascot": "breathe",
+      "self": {
+        "summary": "You care about your work and you know why it matters, but your energy is running low. The commitment is there and the tank is close to empty.",
+        "detail": "Embers are often the people others rely on most. Caring deeply can make it hard to stop, and in the research, high demands without enough recovery are one of the clearest paths to exhaustion. Your meaning is a real strength. The priority now is restoring energy, so your commitment has something to run on.",
+        "outcome": "Use your result to rebuild your energy with small, daily recovery habits, without losing what you care about."
+      },
+      "team": {
+        "summary": "Your team cares about the work and knows why it matters, but energy is running low. Commitment is high and reserves are thin.",
+        "detail": "Ember teams are often mission-driven teams carrying a lot. Caring deeply can make it hard to slow down, and high demands without enough recovery are one of the clearest paths to burnout in the research. Shared purpose is a real strength. The priority now is restoring energy and making recovery a shared norm rather than a private struggle.",
+        "outcome": "Use your result to make recovery part of how the team works, so its commitment stays sustainable."
+      },
+      "exercises": [
+        {
+          "title": "Abdominal breathing",
+          "minutes": 2,
+          "source": "From the Restore Pack",
+          "self": "Place one hand on your chest and the other on your belly. Breathe in through your nose so your belly, not your chest, rises. Exhale slowly, a little longer than the in-breath. Repeat for two minutes.",
+          "team": "Open your next meeting with one minute of slow breathing together: in through the nose, longer out-breath. It takes sixty seconds and changes the tone of the room."
+        },
+        {
+          "title": "A shutdown ritual",
+          "minutes": 5,
+          "source": "Recovery",
+          "self": "At the end of each workday, write down tomorrow's top three, close every tab and say (out loud if you like) \"Done for today.\" Psychologically detaching from work is one of the strongest predictors of recovery.",
+          "team": "Agree a team switch-off norm, such as no messages after 6pm or delayed-send by default, and have leaders model it first."
+        },
+        {
+          "title": "The 80% question",
+          "minutes": 10,
+          "source": "Reflection",
+          "self": "Ask yourself: \"If I only had 80% of my energy for the next month, what would I protect, and what would I let go?\" Write both lists. Pick one thing from the let-go list to drop this week.",
+          "team": "Run a 'stop doing' session: everyone lists work that costs energy and adds little. Agree one thing the team will stop, pause or simplify this month."
+        }
+      ]
+    },
+
+    "fog": {
+      "name": "Fog",
+      "tagline": "Depleted and disconnected",
+      "color": "#3b7a9c",
+      "mascot": "reflect",
+      "self": {
+        "summary": "Energy is low and the sense of why is hard to find right now. Work may feel heavy, flat or hard to see through.",
+        "detail": "Fog is common, and it's a signal rather than a verdict. It often builds slowly, as demands outpace recovery and connection to purpose fades. The way out usually starts small: steadying your energy first, then reconnecting with people and with one thing that matters to you. You don't have to clear all of it at once.",
+        "outcome": "Use your result to take one small step for your energy and one for your connection, and notice what shifts."
+      },
+      "team": {
+        "summary": "Energy is low across the team and the shared why is hard to find right now. Work may feel heavy, flat or hard to see through.",
+        "detail": "Team Fog is common, especially after long stretches of change, pressure or uncertainty. It's a signal rather than a verdict. Teams usually come out of it in small steps: steadying energy first, then reconnecting people to each other and to a purpose they believe in. It helps to hear from the whole team, so you're working from what people actually feel.",
+        "outcome": "Use your result to start a conversation about where the team is, and agree one small step for energy and one for connection."
+      },
+      "exercises": [
+        {
+          "title": "Muscle clench and release",
+          "minutes": 3,
+          "source": "From the Restore Pack",
+          "self": "Clench your fists and toes tightly for five seconds, then release and notice the relaxation. Repeat three times. Starting with the body is often easier than starting with the mind.",
+          "team": "Try a one-minute clench-and-release together at the start of a meeting. It's a little silly, and that helps too."
+        },
+        {
+          "title": "One good thing",
+          "minutes": 5,
+          "source": "Reflection",
+          "self": "Each evening this week, write down one thing that went well at work and why it went well. Small counts. This simple practice has good evidence for lifting mood over time.",
+          "team": "End the week with a two-minute wins round: each person names one thing that went well. Leaders go last."
+        },
+        {
+          "title": "Connect with others",
+          "minutes": 10,
+          "source": "From the Connection Pack",
+          "self": "Have a ten-minute conversation with one colleague that isn't about work. Ask what they're looking forward to. Connection is one of the quickest ways back to energy and meaning.",
+          "team": "Pair people up for a ten-minute walk-and-talk with one prompt: \"What's something you're looking forward to?\" Rotate pairs weekly."
+        }
+      ]
+    }
+  },
+
+  "teamWeather": {
+    "intro": {
+      "self": "Team Weather is the climate you share with the people around you. Each of us has our own nervous system, and teams develop a shared emotional climate too, shaped by safety, rhythm and how people pick up on each other.",
+      "team": "Team Weather is your team's shared climate. Each of us has our own nervous system, and teams develop a shared emotional climate too, shaped by safety, rhythm and how people pick up on each other."
+    },
+    "readings": {
+      "clear": {
+        "name": "Clear skies",
+        "self": "You feel you belong and it feels safe to speak up. That's a strong base. People in climates like this recover from setbacks faster.",
+        "team": "People feel they belong and it's safe to speak up. That's a strong base, and teams with climates like this recover from setbacks faster."
+      },
+      "changeable": {
+        "name": "Changeable",
+        "self": "Belonging and safety are there some of the time. The climate may shift with deadlines, meetings or who's in the room.",
+        "team": "Belonging and safety are there some of the time. The climate may shift with deadlines, pressure or who's in the room."
+      },
+      "overcast": {
+        "name": "Overcast",
+        "self": "Belonging or safety feels low right now. That makes everything else harder, and it's one of the most worthwhile things to work on.",
+        "team": "Belonging or safety feels low right now. That makes everything else harder, and it's one of the most worthwhile places for a team to start."
+      }
+    },
+    "elements": [
+      { "name": "Shared emotional tone", "text": "How moods spread through the team, for better and worse." },
+      { "name": "Shared safety", "text": "Whether people can speak up, take risks and admit mistakes." },
+      { "name": "Attunement and airtime", "text": "Whether people read each other well and everyone gets heard." },
+      { "name": "Shared rhythm", "text": "The rituals and pace that pull the team together." },
+      { "name": "Shared recovery and load", "text": "How pressure is carried, and whether the team recovers together." }
+    ]
+  },
+
+  "decks": {
+    "restore": {
+      "name": "Restore Pack",
+      "line": "50 breathwork, movement and brain exercises to reduce stress and rebuild energy.",
+      "image": "../assets/cards/etsy-restore-thumb.jpg"
+    },
+    "connection": {
+      "name": "Connection Pack",
+      "line": "50 reflection questions and exercises to connect more deeply to yourself, others and your work.",
+      "image": "../assets/cards/etsy-connection-thumb.jpg"
+    }
+  },
+
+  "teamReport": {
+    "name": "Team Weather report",
+    "line": "Everyone on the team takes the discovery. You get a combined report: where the team sits on the Energy × Meaning map, the five elements of your Team Weather, what's driving them, and a practice plan. Individual answers stay confidential, and results show once at least 5 people have responded.",
+    "tiers": [
+      { "label": "5–20 people", "price": "£99" },
+      { "label": "21–40 people", "price": "£199" },
+      { "label": "41+ people", "price": "£329" }
+    ]
+  },
+
+  "support": "If you've felt exhausted or low for more than a couple of weeks, please talk to someone: your GP, your Employee Assistance Programme if you have one, or Mind (mind.org.uk). If you need to talk right now, Samaritans are free to call on 116 123, day or night.",
+
+  "disclaimer": "Workwell Discovery is a reflection tool. It isn't a clinical or psychometric assessment and it can't diagnose anything. The archetypes are in beta and are being reviewed with a neuroscience advisor."
+}
