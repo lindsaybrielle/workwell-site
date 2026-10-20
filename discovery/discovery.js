@@ -474,8 +474,6 @@
     const smallTeam = team && ctx === '2-4'
       ? '<p class="d-note">Team reports need at least 5 people so individual answers stay confidential. For smaller teams, a workshop or discovery call is the better fit.</p>'
       : '';
-    const reportSubject = encodeURIComponent('Team Weather report request');
-    const reportBody = encodeURIComponent('Hi Brielle,\n\nI\'d like a Team Weather report for my team.\n\nTeam size: ' + (team ? ctx : '') + '\nMy discovery result: ' + a.name + '\n\nThanks!');
 
     const TW = content.teamWeather;
     const elements = TW.elements.map(el =>
@@ -576,7 +574,7 @@
                   '<p>' + esc(content.teamReport.line) + '</p>' +
                   '<ul class="d-tiers">' + tiers + '</ul>' +
                   smallTeam +
-                  '<a class="btn btn-teal" href="mailto:' + esc(L.contactEmail) + '?subject=' + reportSubject + '&body=' + reportBody + '" data-track="team-report">Request a team report</a>' +
+                  '<span class="btn btn-teal btn-soon" aria-disabled="true">Coming soon</span>' +
                 '</div>' +
                 callCard(team ? 'Talk it through with Brielle' : 'Curious what would help?', team
                   ? 'A free 30-minute call to explore your result and how a Workwell workshop could help your team.'
