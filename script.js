@@ -95,6 +95,19 @@
   }
   window.WWMascot = { render };
 
+  // Google Analytics click tracking: any element with data-ga="name" sends a
+  // "cta_click" event with that name. Pages without the Google tag (like the
+  // Discovery quiz) skip this.
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-ga]');
+    if (!t || typeof window.gtag !== 'function') return;
+    gtag('event', 'cta_click', {
+      cta_id: t.getAttribute('data-ga'),
+      link_url: t.getAttribute('href') || '',
+      page_path: location.pathname
+    });
+  });
+
   document.querySelectorAll('[data-mascot]').forEach(svg => {
     render(svg, svg.getAttribute('data-mascot'));
   });
@@ -296,6 +309,7 @@
         });
         const data = await res.json();
         if (data.success) {
+          if (window.gtag) gtag('event', 'contact_form_sent');
           formStatus.textContent = 'Thanks — that’s sent. We’ll get back to you soon.';
           contactForm.reset();
         } else {
