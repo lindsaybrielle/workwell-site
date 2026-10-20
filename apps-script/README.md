@@ -45,7 +45,7 @@ Create a coupon in Etsy (**Shop Manager → Marketing → Sales and discounts �
   - archetype and Team Weather
   - all scores
   - their top 3 "what needs to be true"
-  - practices already used
+  - how often they use each practice, plus anything they typed under "Other"
   - the raw answers
 - **Events**: anonymous funnel events, with no email attached:
   - `start`: someone started the quiz (self or team)

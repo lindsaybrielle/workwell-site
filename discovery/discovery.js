@@ -11,7 +11,6 @@
   const qTitle = document.getElementById('q-title');
   const qHint = document.getElementById('q-hint');
   const qOptions = document.getElementById('q-options');
-  const qSection = document.getElementById('q-section');
   const qCount = document.getElementById('q-count');
   const progressBar = document.getElementById('progress-bar');
   const backBtn = document.getElementById('back-btn');
@@ -127,8 +126,8 @@
     });
 
     svgEl('circle', { cx: CX, cy: CY, r: 60, class: 'w-hub' }, svg);
-    svgEl('text', { x: CX, y: CY - 4, class: 'w-hub-t' }, svg).textContent = 'Team';
-    svgEl('text', { x: CX, y: CY + 20, class: 'w-hub-t' }, svg).textContent = 'Weather';
+    svgEl('text', { x: CX, y: CY - 3, class: 'w-hub-t' }, svg).textContent = 'Team';
+    svgEl('text', { x: CX, y: CY + 19, class: 'w-hub-t' }, svg).textContent = 'Archetype';
 
     const order = ['flow', 'ember', 'fog', 'sprinter'];
     let i = 0, timer = null;
@@ -179,13 +178,12 @@
     const q = qs[state.step];
     const copy = q[state.mode];
 
-    qSection.textContent = q.section;
     qCount.textContent = (state.step + 1) + ' of ' + qs.length;
     progressBar.style.width = ((state.step) / qs.length * 100) + '%';
     qTitle.textContent = copy.text;
     if (copy.hint) { qHint.textContent = copy.hint; qHint.hidden = false; } else { qHint.hidden = true; }
     qOptions.innerHTML = '';
-    qOptions.className = 'd-options' + (q.type === 'agree' ? ' d-options-agree' : '') + (q.type === 'multi' ? ' d-options-multi' : '');
+    qOptions.className = 'd-options' + (q.type === 'agree' ? ' d-options-agree' : '') + (q.type === 'multi' ? ' d-options-multi' : '') + (q.type === 'grid' ? ' d-options-grid' : '');
 
     const current = state.answers[q.id];
 
@@ -208,6 +206,8 @@
         qOptions.appendChild(b);
       });
       nextBtn.hidden = current === undefined;
+    } else if (q.type === 'grid') {
+      renderGrid(q);
     } else {
       qOptions.setAttribute('role', 'group');
       qOptions.setAttribute('aria-labelledby', 'q-title');
@@ -245,8 +245,66 @@
       });
       sync();
     }
-    if (q.type !== 'multi') { nextBtn.disabled = false; nextBtn.textContent = 'Next →'; }
+    if (q.type === 'single' || q.type === 'agree') { nextBtn.disabled = false; nextBtn.textContent = 'Next →'; }
     qTitle.focus({ preventScroll: true });
+  }
+
+  // A row per practice, each with a Never / Occasionally / Often choice.
+  // Answers are stored as { practice: scale index }, plus free text for "Other".
+  function renderGrid(q) {
+    qOptions.removeAttribute('role');
+    qOptions.removeAttribute('aria-labelledby');
+    const values = state.answers[q.id] || {};
+    state.answers[q.id] = values;
+    const required = q.options.filter(o => !o.other);
+    const sync = () => {
+      const done = required.filter(o => values[o.value] !== undefined).length;
+      nextBtn.hidden = false;
+      nextBtn.disabled = done < required.length;
+      nextBtn.textContent = nextBtn.disabled ? done + ' of ' + required.length + ' answered' : 'Next \u2192';
+    };
+    q.options.forEach(opt => {
+      const row = document.createElement('div');
+      row.className = 'd-grid-row';
+      if (opt.other) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'practice-other';
+        input.className = 'd-grid-other';
+        input.maxLength = 80;
+        input.placeholder = 'Other (describe it here)';
+        input.setAttribute('aria-label', 'Other practice');
+        input.value = state.answers.practicesOther || '';
+        input.addEventListener('input', () => { state.answers.practicesOther = input.value; });
+        row.appendChild(input);
+      } else {
+        const label = document.createElement('span');
+        label.className = 'd-grid-label';
+        label.textContent = opt.label;
+        row.appendChild(label);
+      }
+      const group = document.createElement('div');
+      group.className = 'd-grid-opts';
+      group.setAttribute('role', 'radiogroup');
+      group.setAttribute('aria-label', opt.label);
+      q.scale.forEach((name, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'd-grid-opt';
+        b.setAttribute('role', 'radio');
+        b.setAttribute('aria-checked', values[opt.value] === i ? 'true' : 'false');
+        b.textContent = name;
+        b.addEventListener('click', () => {
+          values[opt.value] = i;
+          group.querySelectorAll('.d-grid-opt').forEach((el, j) => el.setAttribute('aria-checked', j === i ? 'true' : 'false'));
+          sync();
+        });
+        group.appendChild(b);
+      });
+      row.appendChild(group);
+      qOptions.appendChild(row);
+    });
+    sync();
   }
 
   function advance() {
@@ -269,6 +327,11 @@
     if (q.type === 'agree') return content.scales.agree[idx].score / 4 * 100;
     const opts = q.self.options;
     return opts[idx].score / 3 * 100;
+  }
+
+  // "a, b and c"
+  function listJoin(items) {
+    return items.length < 2 ? items.join('') : items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
   }
 
   function mean(arr) { return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0; }
@@ -360,7 +423,11 @@
     const ctx = contextAnswer();
     const weather = content.teamWeather.readings[s.weather];
     const enablers = state.answers.enablers || [];
-    const practices = (state.answers.practices || []).filter(p => p !== 'none');
+    const practiceFreq = state.answers.practices || {};
+    const otherText = (state.answers.practicesOther || '').trim();
+    const practiceName = k => k === 'other' && otherText ? otherText : (content.practiceLabels[k] || k);
+    const usedOften = Object.keys(practiceFreq).filter(k => practiceFreq[k] === 2).map(practiceName);
+    const usedSometimes = Object.keys(practiceFreq).filter(k => practiceFreq[k] === 1).map(practiceName);
     const enablerOpts = questions().find(q => q.id === 'enablers').options;
     const labelFor = v => (enablerOpts.find(o => o.value === v) || {}).label || v;
     const lowEnergy = s.energy < 50;
@@ -377,7 +444,7 @@
       return '<a class="d-deck" href="' + esc(url) + '" target="_blank" rel="noopener" data-track="etsy-' + key + '">' +
         '<img src="' + esc(d.image) + '" alt="" loading="lazy">' +
         '<div><div class="d-deck-why">' + esc(why) + '</div><h4>' + esc(d.name) + '</h4><p>' + esc(d.line) + '</p>' +
-        '<span class="d-link">See it on Etsy &rarr;</span></div></a>';
+        '<span class="d-link">Buy here &rarr;</span></div></a>';
     }).join('');
 
     const discount = L.discountCode
@@ -392,10 +459,13 @@
         '<p>' + esc(ex[mode]) + '</p>' +
       '</article>').join('');
 
-    const already = practices.length
-      ? '<p class="d-note">' + (team ? 'Your team already uses ' : 'You already use ') +
-        esc(practices.map(p => content.practiceLabels[p] || p).join(', ')) + '. Build on what works: pair one of these practices with a habit that already sticks.</p>'
-      : '';
+    const already = usedOften.length
+      ? '<p class="d-note">' + (team ? 'Your team often uses ' : 'You often use ') + esc(listJoin(usedOften)) +
+        '. Build on what works: pair one of these practices with a habit that already sticks.</p>'
+      : usedSometimes.length
+        ? '<p class="d-note">' + (team ? 'Your team sometimes uses ' : 'You sometimes use ') + esc(listJoin(usedSometimes)) +
+          '. Turning one of these into a regular habit is a strong first step.</p>'
+        : '';
 
     const enablerList = enablers.map(v =>
       '<li><strong>' + esc(labelFor(v)) + '</strong><span>' + esc(content.enablerTips[v] || '') + '</span></li>').join('');
@@ -407,8 +477,10 @@
     const reportSubject = encodeURIComponent('Team Weather report request');
     const reportBody = encodeURIComponent('Hi Brielle,\n\nI\'d like a Team Weather report for my team.\n\nTeam size: ' + (team ? ctx : '') + '\nMy discovery result: ' + a.name + '\n\nThanks!');
 
-    const elements = content.teamWeather.elements.map(el =>
-      '<li><strong>' + esc(el.name) + '</strong><span>' + esc(el.text) + '</span></li>').join('');
+    const TW = content.teamWeather;
+    const elements = TW.elements.map(el =>
+      '<div class="d-el"><h4>' + esc(el.name) + '</h4><p class="d-el-what">' + esc(el.text) + '</p><p>' + esc(el.why) + '</p></div>').join('');
+    const expectList = items => '<ul>' + items.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>';
 
     resultsEl.innerHTML =
       '<section class="d-res-hero" style="--arch:' + esc(a.color) + '">' +
@@ -465,8 +537,15 @@
               '<p class="d-small">' + esc(content.teamWeather.intro[mode]) + '</p>' +
               '<p>' + esc(weather[mode]) + '</p>' +
               '<div class="d-weather-more">' +
-                '<p><strong>The full Team Weather report</strong> reads five elements of your team\'s climate:</p>' +
-                '<ul class="d-elements">' + elements + '</ul>' +
+                '<h3>The five elements of Team Weather</h3>' +
+                '<p>' + esc(TW.whyFive) + '</p>' +
+                '<div class="d-elements">' + elements + '</div>' +
+                '<h3>What you can expect when you navigate it well</h3>' +
+                '<div class="d-expect">' +
+                  '<div><h4>For leaders</h4>' + expectList(TW.expect.leaders) + '</div>' +
+                  '<div><h4>For individuals</h4>' + expectList(TW.expect.individuals) + '</div>' +
+                '</div>' +
+                '<p class="d-small">The full Team Weather report reads all five elements across your team.</p>' +
               '</div>' +
             '</section>' +
 
@@ -484,15 +563,13 @@
             '</section>' +
 
             '<section class="d-block">' +
-              '<div class="eyebrow">Go deeper</div>' +
-              '<h2>Cards matched to your result</h2>' +
+              '<h2>Explore 50 exercises and prompts matched to your result</h2>' +
               discount +
               '<div class="d-decks">' + decks + '</div>' +
             '</section>' +
 
             '<section class="d-block">' +
-              '<div class="eyebrow">Next steps</div>' +
-              '<h2>' + (team ? 'Hear from the whole team' : 'Take it to your team') + '</h2>' +
+              '<h2>Take this to your team</h2>' +
               '<div class="d-next">' +
                 '<div class="d-report">' +
                   '<h3>' + esc(content.teamReport.name) + '</h3>' +
@@ -584,7 +661,8 @@
       archetype: s.archetype,
       weather: s.weather,
       enablers: state.answers.enablers || [],
-      practices: state.answers.practices || []
+      practices: state.answers.practices || {},
+      practicesOther: (state.answers.practicesOther || '').trim().slice(0, 80)
     };
 
     let sent = false;

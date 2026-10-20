@@ -60,12 +60,12 @@
         ]
       },
       "team": {
-        "text": "Picture your team on a Sunday evening. How do you think most of them feel about the week ahead?",
+        "text": "How does your team usually seem at the start of the week?",
         "options": [
-          { "label": "Ready. Quietly looking forward to it", "score": 3 },
-          { "label": "Fine. A bit of admin on their minds, nothing heavy", "score": 2 },
-          { "label": "A low hum of dread", "score": 1 },
-          { "label": "Heavy. The week is already weighing on them", "score": 0 }
+          { "label": "Energised. People arrive with ideas and momentum", "score": 3 },
+          { "label": "Steady. A slow start, then into the flow", "score": 2 },
+          { "label": "Flat. Quiet, low energy and slow to get going", "score": 1 },
+          { "label": "Strained. Tense, irritable or already firefighting", "score": 0 }
         ]
       }
     },
@@ -84,12 +84,12 @@
         ]
       },
       "team": {
-        "text": "By the end of a typical week, how does your team seem?",
+        "text": "By the end of the week, what do you usually notice?",
         "options": [
-          { "label": "Still buzzing", "score": 3 },
-          { "label": "Tired, but steady", "score": 2 },
-          { "label": "Flat and drained", "score": 1 },
-          { "label": "Running on empty", "score": 0 }
+          { "label": "Still engaged. Good humour and ideas in the room", "score": 3 },
+          { "label": "Tired but steady. Winding down at a normal pace", "score": 2 },
+          { "label": "Drained. Short replies and mistakes creeping in", "score": 1 },
+          { "label": "Running on empty. Snapping, sick days or people checking out", "score": 0 }
         ]
       }
     },
@@ -108,12 +108,12 @@
         ]
       },
       "team": {
-        "text": "Outside working hours, how well does your team switch off?",
+        "text": "How often do you see work messages from your team outside working hours?",
         "options": [
-          { "label": "Well. Evenings and weekends are protected", "score": 3 },
-          { "label": "Mostly, with the odd message", "score": 2 },
-          { "label": "Rarely. Work spills into evenings", "score": 1 },
-          { "label": "Never. Everyone is always half-on", "score": 0 }
+          { "label": "Rarely. Evenings and weekends stay quiet", "score": 3 },
+          { "label": "Now and then, usually before a deadline", "score": 2 },
+          { "label": "Most evenings, from a few people", "score": 1 },
+          { "label": "Constantly, from most of the team", "score": 0 }
         ]
       }
     },
@@ -132,12 +132,12 @@
         ]
       },
       "team": {
-        "text": "Looking back over the last month, how does your team feel about what it has achieved?",
+        "text": "When your team finishes a piece of work, what usually happens?",
         "options": [
-          { "label": "Proud. The progress is visible", "score": 3 },
-          { "label": "Satisfied enough", "score": 2 },
-          { "label": "Unsure. Busy, but progress is hard to see", "score": 1 },
-          { "label": "Frustrated. Effort isn't turning into results", "score": 0 }
+          { "label": "We notice the progress and celebrate it", "score": 3 },
+          { "label": "Big wins get noticed, smaller ones less so", "score": 2 },
+          { "label": "We ship it and move straight on to the next thing", "score": 1 },
+          { "label": "It's hard to point to finished work. Effort doesn't seem to turn into results", "score": 0 }
         ]
       }
     },
@@ -148,7 +148,7 @@
       "facet": "coherence",
       "section": "Meaning",
       "self": { "text": "I understand how my work fits together and where it's heading." },
-      "team": { "text": "My team understands how our work fits together and where it's heading." }
+      "team": { "text": "People on my team can explain how their work connects to the team's goals." }
     },
     {
       "id": "m2",
@@ -157,7 +157,7 @@
       "facet": "significance",
       "section": "Meaning",
       "self": { "text": "My work makes a real difference to someone." },
-      "team": { "text": "People on my team can see the difference their work makes." }
+      "team": { "text": "People on my team talk about who their work helps, like customers, colleagues or the wider world." }
     },
     {
       "id": "m3",
@@ -166,7 +166,7 @@
       "facet": "purpose",
       "section": "Meaning",
       "self": { "text": "I'm working towards goals I genuinely care about." },
-      "team": { "text": "My team is working towards goals we genuinely care about." }
+      "team": { "text": "People on my team bring their own ideas and energy to our goals, beyond what's asked of them." }
     },
     {
       "id": "c1",
@@ -174,7 +174,7 @@
       "axis": "connection",
       "section": "Connection",
       "self": { "text": "I feel I belong with the people I work with." },
-      "team": { "text": "People on my team feel they belong here." }
+      "team": { "text": "People on my team help each other without being asked, and newcomers are quickly included." }
     },
     {
       "id": "c2",
@@ -182,7 +182,7 @@
       "axis": "connection",
       "section": "Connection",
       "self": { "text": "I can raise a concern or admit a mistake without it being held against me." },
-      "team": { "text": "People on my team can raise concerns or admit mistakes without it being held against them." }
+      "team": { "text": "In meetings, people on my team raise concerns, ask questions and admit mistakes openly." }
     },
     {
       "id": "enablers",
@@ -190,7 +190,7 @@
       "max": 3,
       "section": "Working at your best",
       "self": { "text": "What needs to be true for you to work at your best?", "hint": "Choose your top 3." },
-      "team": { "text": "What needs to be true for your team to work at its best?", "hint": "Choose the top 3." },
+      "team": { "text": "What does your team most need to work at its best?", "hint": "Choose the top 3." },
       "options": [
         { "value": "clarity", "label": "Clear priorities" },
         { "value": "autonomy", "label": "Freedom over how the work gets done" },
@@ -208,24 +208,24 @@
     },
     {
       "id": "practices",
-      "type": "multi",
-      "max": 0,
+      "type": "grid",
       "section": "Practices",
-      "self": { "text": "Which of these do you already use to look after yourself at work?", "hint": "Choose any that apply." },
-      "team": { "text": "Which of these does your team already use?", "hint": "Choose any that apply." },
+      "self": { "text": "How often do you use these to look after yourself at work?", "hint": "Choose one for each row." },
+      "team": { "text": "How often does your team use these?", "hint": "Choose one for each row." },
+      "scale": ["Never", "Occasionally", "Often"],
       "options": [
         { "value": "breathwork", "label": "Breathwork" },
         { "value": "movement", "label": "Movement or stretching" },
         { "value": "mindfulness", "label": "Mindfulness or meditation" },
         { "value": "reflection", "label": "Journaling or reflection" },
-        { "value": "gratitude", "label": "Gratitude or appreciation" },
+        { "value": "gratitude", "label": "Gratitude-specific exercises" },
         { "value": "nature", "label": "Walks or time outdoors" },
         { "value": "checkins", "label": "Check-ins or team rituals" },
-        { "value": "oneones", "label": "Wellbeing in 1:1s" },
+        { "value": "oneones", "label": "Focus on wellbeing in 1:1s" },
         { "value": "offsites", "label": "Workshops or offsites" },
         { "value": "boundaries", "label": "Boundaries like focus time or no-meeting days" },
         { "value": "sleep", "label": "A sleep or wind-down routine" },
-        { "value": "none", "label": "Nothing yet", "exclusive": true }
+        { "value": "other", "label": "Other", "other": true }
       ]
     }
   ],
@@ -250,13 +250,14 @@
     "movement": "movement",
     "mindfulness": "mindfulness",
     "reflection": "reflection",
-    "gratitude": "gratitude",
+    "gratitude": "gratitude exercises",
     "nature": "time outdoors",
-    "checkins": "check-ins and rituals",
+    "checkins": "check-ins or rituals",
     "oneones": "wellbeing 1:1s",
-    "offsites": "workshops and offsites",
+    "offsites": "workshops or offsites",
     "boundaries": "boundaries",
-    "sleep": "a wind-down routine"
+    "sleep": "a wind-down routine",
+    "other": "your own practice"
   },
 
   "archetypes": {
@@ -443,13 +444,48 @@
         "team": "Belonging or safety feels low right now. That makes everything else harder, and it's one of the most worthwhile places for a team to start."
       }
     },
+    "whyFive": "These five elements come from decades of research into how groups feel, think and recover together. Our nervous systems are social: they constantly pick up cues from the people around us and adjust to them. Each element describes one way that happens at work, and together they shape whether a team can perform at its peak without burning out.",
     "elements": [
-      { "name": "Shared emotional tone", "text": "How moods spread through the team, for better and worse." },
-      { "name": "Shared safety", "text": "Whether people can speak up, take risks and admit mistakes." },
-      { "name": "Attunement and airtime", "text": "Whether people read each other well and everyone gets heard." },
-      { "name": "Shared rhythm", "text": "The rituals and pace that pull the team together." },
-      { "name": "Shared recovery and load", "text": "How pressure is carried, and whether the team recovers together." }
-    ]
+      {
+        "name": "Shared emotional tone",
+        "text": "How moods spread through the team, for better and worse.",
+        "why": "We automatically mirror the faces, voices and body language of the people around us. Research on teams shows one person's mood can ripple through a whole group and change how well it cooperates and decides."
+      },
+      {
+        "name": "Shared safety",
+        "text": "Whether people can speak up, take risks and admit mistakes.",
+        "why": "The brain is always scanning for social threat. When people fear blame or embarrassment, the stress response kicks in and narrows thinking. Psychological safety is one of the strongest predictors of how well teams learn and perform."
+      },
+      {
+        "name": "Attunement and airtime",
+        "text": "Whether people read each other well and everyone gets heard.",
+        "why": "Teams that read each other's signals and share airtime solve problems better than groups of individually brilliant people. Early brain research even suggests that people who are tuned in to each other start to show similar patterns of brain activity."
+      },
+      {
+        "name": "Shared rhythm",
+        "text": "The rituals and pace that pull the team together.",
+        "why": "Doing things together in time, like moving, breathing, pausing or celebrating, builds trust and belonging. Predictable rhythms give the nervous system something to settle into, so energy goes into the work rather than staying on alert."
+      },
+      {
+        "name": "Shared recovery and load",
+        "text": "How pressure is carried, and whether the team recovers together.",
+        "why": "Stress is contagious: watching a stressed colleague can raise your own stress response. Supportive people have the opposite effect. The brain treats them as shared resources, so the same challenge feels lighter when it's carried together."
+      }
+    ],
+    "expect": {
+      "leaders": [
+        "An early-warning system for burnout and conflict, before they show up in sick days or resignations",
+        "Clearer thinking and better decisions under pressure",
+        "Faster recovery after setbacks, deadlines and change",
+        "A team people want to stay in"
+      ],
+      "individuals": [
+        "Less absorbing other people's stress without noticing",
+        "More confidence to speak up and ask for what you need",
+        "Energy left at the end of the day",
+        "Simple ways to reset yourself and your team when the weather turns"
+      ]
+    }
   },
 
   "decks": {
@@ -467,7 +503,7 @@
 
   "teamReport": {
     "name": "Team Weather report",
-    "line": "Everyone on the team takes the discovery. You get a combined report: where the team sits on the Energy × Meaning map, the five elements of your Team Weather, what's driving them, and a practice plan. Individual answers stay confidential, and results show once at least 5 people have responded.",
+    "line": "Invite everyone on your team to complete an in-depth Team Weather Discovery and get a combined report: where individuals sit on the Team Archetypes, the five elements driving your Team's Weather, and a personalised practice plan. Individual answers stay confidential, with anonymised results used to provide insight into overall team dynamics.",
     "tiers": [
       { "label": "5–20 people", "price": "£99" },
       { "label": "21–40 people", "price": "£199" },

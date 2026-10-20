@@ -26,7 +26,7 @@ const RESEND_COOLDOWN_SECONDS = 600;
 const RESPONSE_HEADERS = [
   'Timestamp', 'ID', 'Mode', 'Email', 'Marketing consent', 'Consent version', 'Content version',
   'Context', 'Archetype', 'Team Weather', 'Energy', 'Meaning', 'Connection', 'Satisfaction',
-  'Enjoyment', 'Coherence', 'Significance', 'Purpose', 'Enablers', 'Practices', 'Answers (JSON)', 'Emailed'
+  'Enjoyment', 'Coherence', 'Significance', 'Purpose', 'Enablers', 'Practices (how often)', 'Practices other', 'Answers (JSON)', 'Emailed'
 ];
 const EVENT_HEADERS = ['Timestamp', 'ID', 'Event', 'Target'];
 const EVENT_TYPES = ['start', 'complete', 'click'];
@@ -69,7 +69,7 @@ function sendTestEmail() {
   sendResults(c, me, {
     mode: 'self', archetype: 'ember', weather: 'changeable', context: 'lead',
     scores: { energy: 33, meaning: 75, connection: 55, satisfaction: 67, enjoyment: 44, coherence: 75, significance: 83, purpose: 67 },
-    enablers: ['recovery', 'trust', 'workload'], practices: ['breathwork', 'nature']
+    enablers: ['recovery', 'trust', 'workload'], practices: { breathwork: 2, nature: 1, sleep: 0 }, practicesOther: ''
   });
 }
 
@@ -100,7 +100,6 @@ function handleSubmit(b) {
   const q = byId(c.questions);
   const contextValues = q.context[mode].options.map(o => o.value);
   const enablerValues = q.enablers.options.map(o => o.value);
-  const practiceValues = q.practices.options.map(o => o.value);
 
   const data = {
     mode,
@@ -109,7 +108,8 @@ function handleSubmit(b) {
     context: contextValues.indexOf(b.context) !== -1 ? b.context : '',
     scores: {},
     enablers: pick(b.enablers, enablerValues).slice(0, 3),
-    practices: pick(b.practices, practiceValues)
+    practices: cleanFreq(b.practices, q.practices),
+    practicesOther: String(b.practicesOther || '').replace(/\s+/g, ' ').trim().slice(0, 80)
   };
   ['energy', 'meaning', 'connection', 'satisfaction', 'enjoyment', 'coherence', 'significance', 'purpose']
     .forEach(k => { data.scores[k] = clampScore(b.scores && b.scores[k]); });
@@ -131,7 +131,9 @@ function handleSubmit(b) {
     data.context, data.archetype, data.weather,
     data.scores.energy, data.scores.meaning, data.scores.connection, data.scores.satisfaction,
     data.scores.enjoyment, data.scores.coherence, data.scores.significance, data.scores.purpose,
-    data.enablers.join(', '), data.practices.join(', '), JSON.stringify(answers), emailed ? 'yes' : 'no'
+    data.enablers.join(', '),
+    Object.keys(data.practices).map(k => k + ': ' + q.practices.scale[data.practices[k]].toLowerCase()).join(', '),
+    safeCell(data.practicesOther), JSON.stringify(answers), emailed ? 'yes' : 'no'
   ]);
 
   return { ok: true, emailed };
@@ -192,9 +194,13 @@ function reportHtml(c, d) {
 
   const decks = (d.archetype === 'ember' ? ['restore'] : d.archetype === 'fog' ? ['restore', 'connection'] : ['connection'])
     .map(k => '<li style="margin-bottom:6px"><strong>' + esc(c.decks[k].name) + '</strong>: ' + esc(c.decks[k].line) +
-      ' <a href="' + esc(k === 'restore' ? L.etsyRestore : L.etsyConnection) + '" style="color:#d98c0c">Find it on Etsy</a></li>').join('');
+      ' <a href="' + esc(k === 'restore' ? L.etsyRestore : L.etsyConnection) + '" style="color:#d98c0c">Buy here</a></li>').join('');
 
-  const practicesUsed = d.practices.filter(x => x !== 'none').map(x => c.practiceLabels[x] || x);
+  const practiceName = k => k === 'other' && d.practicesOther ? d.practicesOther : (c.practiceLabels[k] || k);
+  const usedOften = Object.keys(d.practices).filter(k => d.practices[k] === 2).map(practiceName);
+  const usedSometimes = Object.keys(d.practices).filter(k => d.practices[k] === 1).map(practiceName);
+  const TW = c.teamWeather;
+  const list = items => '<ul style="padding-left:18px;margin:4px 0 10px">' + items.map(t => '<li style="margin-bottom:4px">' + esc(t) + '</li>').join('') + '</ul>';
 
   return '<html><head><meta charset="utf-8"></head><body style="font-family:Arial,Helvetica,sans-serif;color:#1f3536;font-size:12px;line-height:1.5;margin:28px">' +
     '<div style="background:' + esc(a.color) + ';color:#fff;padding:22px 24px">' +
@@ -226,8 +232,12 @@ function reportHtml(c, d) {
     '</table>' +
 
     h2('Team Weather: ' + w.name) + p(c.teamWeather.intro[m]) + p(w[m]) +
-    p('The full Team Weather report reads five elements of your team\'s climate: ' +
-      c.teamWeather.elements.map(e => e.name.toLowerCase()).join(', ') + '.') +
+    '<h3 style="font-family:Georgia,serif;color:#235f72;font-size:15px;margin:16px 0 6px">The five elements of Team Weather</h3>' +
+    p(TW.whyFive) +
+    TW.elements.map(e => '<p style="margin:0 0 8px"><strong style="color:#235f72">' + esc(e.name) + '.</strong> ' + esc(e.text) + ' ' + esc(e.why) + '</p>').join('') +
+    '<h3 style="font-family:Georgia,serif;color:#235f72;font-size:15px;margin:16px 0 6px">What you can expect when you navigate it well</h3>' +
+    '<p style="margin:0"><strong>For leaders</strong></p>' + list(TW.expect.leaders) +
+    '<p style="margin:0"><strong>For individuals</strong></p>' + list(TW.expect.individuals) +
 
     (d.enablers.length ? h2('What needs to be true') +
       '<ul style="padding-left:18px">' + d.enablers.map(v =>
@@ -240,9 +250,10 @@ function reportHtml(c, d) {
         '<div style="font-family:Georgia,serif;font-size:15px;color:#235f72;margin-top:2px">' + esc(ex.title) + '</div>' +
         '<p style="margin:6px 0 0">' + esc(ex[m]) + '</p>' +
       '</div>').join('') +
-    (practicesUsed.length ? p((team ? 'Your team already uses ' : 'You already use ') + practicesUsed.join(', ') + '. Build on what works.') : '') +
+    (usedOften.length ? p((team ? 'Your team often uses ' : 'You often use ') + listJoin(usedOften) + '. Build on what works.')
+      : usedSometimes.length ? p((team ? 'Your team sometimes uses ' : 'You sometimes use ') + listJoin(usedSometimes) + '. Turning one of these into a regular habit is a strong first step.') : '') +
 
-    h2('Cards matched to your result') +
+    h2('Explore 50 exercises and prompts matched to your result') +
     (L.discountCode ? p('Your discovery discount: use code ' + L.discountCode + (L.discountLabel ? ' for ' + L.discountLabel : '') + ' at checkout.') : '') +
     '<ul style="padding-left:18px">' + decks + '</ul>' +
 
@@ -313,12 +324,30 @@ function cleanAnswers(answers, questions, mode) {
     const v = answers[q.id];
     if (q.type === 'multi') {
       out[q.id] = pick(v, q.options.map(o => o.value));
+    } else if (q.type === 'grid') {
+      out[q.id] = cleanFreq(v, q);
     } else {
       const n = q.type === 'agree' ? 5 : q[mode].options.length;
       if (Number.isInteger(v) && v >= 0 && v < n) out[q.id] = v;
     }
   });
   return out;
+}
+
+// Keeps only known practices with a valid Never / Occasionally / Often index.
+function cleanFreq(v, q) {
+  const out = {};
+  if (!v || typeof v !== 'object') return out;
+  q.options.forEach(o => {
+    const x = v[o.value];
+    if (Number.isInteger(x) && x >= 0 && x < q.scale.length) out[o.value] = x;
+  });
+  return out;
+}
+
+// "a, b and c"
+function listJoin(items) {
+  return items.length < 2 ? items.join('') : items.slice(0, -1).join(', ') + ' and ' + items[items.length - 1];
 }
 
 function clampScore(v) {
