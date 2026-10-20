@@ -165,9 +165,17 @@
     } catch (e) { /* logging is best-effort */ }
   }
 
+  // Google Analytics gets the quiz steps and clicks only, never answers,
+  // scores, archetypes or emails.
+  function gaEvent(name, params) {
+    if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+  }
+
   document.addEventListener('click', e => {
     const t = e.target.closest('[data-track]');
-    if (t) logEvent('click', t.getAttribute('data-track'));
+    if (!t) return;
+    logEvent('click', t.getAttribute('data-track'));
+    gaEvent('cta_click', { cta_id: 'quiz-' + t.getAttribute('data-track'), link_url: t.getAttribute('href') || '', page_path: location.pathname });
   });
 
   // ---------- questions ----------
@@ -373,6 +381,7 @@
     const s = score();
     state.scores = s;
     logEvent('complete', state.mode + ':' + s.archetype);
+    gaEvent('quiz_complete', { quiz_path: state.mode });
     renderResults(s);
     show('results');
   }
@@ -683,6 +692,7 @@
 
   function unlock(sent, email) {
     state.unlocked = true;
+    gaEvent('quiz_unlock', { quiz_path: state.mode });
     const full = document.getElementById('full');
     full.removeAttribute('inert');
     full.removeAttribute('aria-hidden');
@@ -704,6 +714,7 @@
     state.step = 0;
     state.answers = {};
     logEvent('start', state.mode);
+    gaEvent('quiz_start', { quiz_path: state.mode });
     show('question');
     renderQuestion();
   }

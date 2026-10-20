@@ -1,9 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- No analytics on this page: answers here can relate to wellbeing, so the
-     quiz runs without tracking cookies. Clicks on results are logged to the
-     Workwell sheet instead (see discovery.js). -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MDB75YJ4NP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MDB75YJ4NP');
+</script>
+<!-- Google Analytics only receives quiz steps (started, finished, unlocked)
+     and result-page clicks. Answers, scores, archetypes and emails are never
+     sent to it; those go to the Workwell sheet (see discovery.js). -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Discovery — Workwell</title>
