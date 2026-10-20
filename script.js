@@ -331,10 +331,6 @@
     {
       quote: '“Some of the exercises I knew, and some were totally new. Having them physically in front of me makes the difference.”',
       cite: '— Emily, Senior Manager'
-    },
-    {
-      quote: '“The session… was excellent. My group had a very thought-provoking exercise and I think we made some helpful recommendations for things to improve in our team.”',
-      cite: '— Anonymous, Government Advisor'
     }
   ];
   const tSlide = document.getElementById('t-slide');

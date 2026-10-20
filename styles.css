@@ -169,9 +169,6 @@ section { position: relative; }
 .hq-list { list-style: none; padding: 0; margin: 2px 0 0; display: grid; gap: 8px; font-size: 0.88rem; }
 .hq-list li { position: relative; padding-left: 26px; }
 .hq-list li::before { content: '\2713'; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--teal); color: var(--teal); font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.hero-proof { margin: 36px 0 0; padding-top: 22px; border-top: 1px solid rgba(251,246,234,0.3); max-width: 50ch; }
-.hero-proof blockquote { margin: 0; font-size: 0.98rem; font-style: italic; color: rgba(251,246,234,0.92); }
-.hero-proof figcaption { margin-top: 10px; font-size: 0.82rem; font-weight: 600; color: var(--sand-deep); }
 
 /* ---------- sound familiar ---------- */
 .fam-row { display: grid; grid-template-columns: 220px 1fr; gap: clamp(24px, 5vw, 56px); align-items: center; max-width: 880px; margin: 48px auto 0; }
@@ -257,7 +254,7 @@ section { position: relative; }
 .t-dots button[aria-current="true"] { background: var(--rose); width: 20px; border-radius: 999px; transition: width 0.2s ease; }
 
 /* ---------- about ---------- */
-.about { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; margin-top: 8px; }
+.about { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; margin: 8px auto 0; max-width: 860px; }
 .about img { width: 100%; border-radius: 50%; aspect-ratio: 1; object-fit: cover; box-shadow: var(--shadow); }
 .about h3 { font-size: 1.5rem; color: var(--teal); }
 .about p { margin-top: 14px; font-size: 0.98rem; max-width: 60ch; }
@@ -320,7 +317,6 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
   .hero .lede { order: 2; }
   .hero-quiz { order: 3; margin-top: 28px; }
   .hero .cta-row { order: 4; }
-  .hero-proof { order: 5; }
   .steps, .tools { grid-template-columns: 1fr; }
   .fam-row, .fam-row.reverse { grid-template-columns: 1fr; justify-items: center; margin-top: 40px; }
   .fam-row.reverse .fam-art { order: 0; }
