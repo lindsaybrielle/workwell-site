@@ -155,14 +155,65 @@ section { position: relative; }
 .pack-copy p { margin-top: 14px; font-size: 0.98rem; max-width: 46ch; color: rgba(255,255,255,0.92); }
 .pack-copy .btn { margin-top: 22px; }
 
-/* ---------- discovery band ---------- */
-.discovery-band { padding-bottom: 0; }
-.discovery-card { display: flex; gap: 28px; align-items: center; justify-content: space-between; background: linear-gradient(135deg, var(--teal), var(--teal-mid)); color: #fbf6ea; border-radius: var(--radius-lg); padding: clamp(28px, 4vw, 40px); box-shadow: var(--shadow); }
-.discovery-card .eyebrow { color: var(--sand-deep); }
-.discovery-card h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); margin-top: 6px; }
-.discovery-card p { margin: 10px 0 0; max-width: 58ch; color: rgba(251,246,234,0.9); }
-.discovery-card .btn { flex: none; }
-@media (max-width: 640px) { .discovery-card { flex-direction: column; align-items: flex-start; } }
+/* ---------- hero quiz card ---------- */
+.hero-quiz { background: var(--paper-card); color: var(--ink); border-radius: var(--radius-lg); padding: 28px 26px; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.45); display: flex; flex-direction: column; gap: 14px; }
+.hq-top { display: flex; gap: 14px; align-items: center; }
+.hq-mascot { width: 64px; height: 76px; flex: none; }
+.hero-quiz h2 { font-size: 1.55rem; color: var(--teal); margin-top: 4px; }
+.hero-quiz p { margin: 0; font-size: 0.95rem; }
+.hq-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.hq-choice { display: flex; flex-direction: column; gap: 2px; text-decoration: none; background: var(--mustard); color: #fff; border-radius: 16px; padding: 14px 18px; transition: transform 0.15s ease, filter 0.15s ease; }
+.hq-choice:hover { filter: brightness(1.06); transform: translateY(-2px); }
+.hq-k { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+.hq-h { font-family: 'Caprasimo', serif; font-size: 1.35rem; line-height: 1.2; }
+.hq-list { list-style: none; padding: 0; margin: 2px 0 0; display: grid; gap: 8px; font-size: 0.88rem; }
+.hq-list li { position: relative; padding-left: 26px; }
+.hq-list li::before { content: '\2713'; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--teal); color: var(--teal); font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.hero-proof { margin: 36px 0 0; padding-top: 22px; border-top: 1px solid rgba(251,246,234,0.3); max-width: 50ch; }
+.hero-proof blockquote { margin: 0; font-size: 0.98rem; font-style: italic; color: rgba(251,246,234,0.92); }
+.hero-proof figcaption { margin-top: 10px; font-size: 0.82rem; font-weight: 600; color: var(--sand-deep); }
+
+/* ---------- sound familiar ---------- */
+.fam-row { display: grid; grid-template-columns: 220px 1fr; gap: clamp(24px, 5vw, 56px); align-items: center; max-width: 880px; margin: 48px auto 0; }
+.fam-row.reverse { grid-template-columns: 1fr 220px; }
+.fam-row.reverse .fam-art { order: 2; }
+.fam-art { aspect-ratio: 1; max-width: 100%; border-radius: 50%; background: var(--sand-light); display: flex; align-items: center; justify-content: center; }
+.fam-row:nth-of-type(2) .fam-art { background: var(--rose-pale); }
+.fam-row:nth-of-type(3) .fam-art { background: #dbe7d8; }
+.fam-art svg { width: 62%; }
+.fam-copy { min-width: 0; }
+.fam-bubble { background: #e7f0ef; border-radius: var(--radius-md); padding: 20px 22px; }
+.fam-bubble p { margin: 0; font-size: 1rem; }
+.fam-bubble p + p { margin-top: 10px; opacity: 0.85; }
+.fam-quote { margin: 16px 0 0 4px; }
+.fam-quote blockquote { margin: 0; font-size: 0.9rem; font-style: italic; }
+.fam-quote figcaption { margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: var(--teal); }
+.fam-cta { display: flex; justify-content: center; margin-top: 48px; }
+
+/* ---------- how it works ---------- */
+.how { background: var(--paper-card); border-block: 1px solid var(--line); }
+.steps { list-style: none; padding: 0; margin: 40px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.step { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 22px; background: var(--paper); display: flex; flex-direction: column; }
+.step-num { font-family: 'Caprasimo', serif; font-size: 1.5rem; color: var(--rose); }
+.step h3 { font-size: 1.4rem; color: var(--teal); margin-top: 6px; }
+.step p { font-size: 0.95rem; margin: 10px 0 0; flex: 1; }
+.step-link { margin-top: 14px; font-weight: 600; font-size: 0.9rem; color: var(--mustard); text-decoration: none; }
+.step-link:hover { text-decoration: underline; }
+.section-head p a { color: var(--teal); font-weight: 600; }
+
+/* ---------- free tools ---------- */
+.tools { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.tool-card { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow); transition: transform 0.15s ease; font-family: 'Poppins', sans-serif; color: var(--ink); }
+.tool-card:hover { transform: translateY(-3px); }
+.tool-card:focus-visible { outline: 2px solid var(--teal-mid); outline-offset: 3px; }
+.tool-art { width: 96px; height: 112px; }
+.tool-card .k { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); }
+.tool-card h3 { font-size: 1.35rem; color: var(--teal); margin-top: 6px; }
+.tool-card p { font-size: 0.92rem; margin: 8px 0 0; line-height: 1.55; }
+.tool-link { display: inline-block; margin-top: 10px; font-weight: 600; font-size: 0.88rem; color: var(--mustard); }
+.play-cards-head { margin-top: 64px; }
+.play-cards-head h3 { font-size: 1.5rem; color: var(--teal); }
+.play-cards-head p { margin-top: 8px; }
 
 /* ---------- workshops / paths ---------- */
 .paths { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -262,10 +313,26 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
   .pillars { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-stage { order: -1; }
+  /* On small screens the quiz card sits straight after the intro, above the secondary buttons. */
+  .hero .wrap { display: flex; flex-direction: column; gap: 0; }
+  .hero-copy { display: contents; }
+  .hero h1 { order: 1; }
+  .hero .lede { order: 2; }
+  .hero-quiz { order: 3; margin-top: 28px; }
+  .hero .cta-row { order: 4; }
+  .hero-proof { order: 5; }
+  .steps, .tools { grid-template-columns: 1fr; }
+  .fam-row, .fam-row.reverse { grid-template-columns: 1fr; justify-items: center; margin-top: 40px; }
+  .fam-row.reverse .fam-art { order: 0; }
+  .fam-art { width: 160px; }
+  .fam-copy { width: 100%; }
 }
 @media (max-width: 640px) {
   .flip-grid { grid-template-columns: 1fr 1fr; }
   .paths { grid-template-columns: 1fr; }
+  .hq-choices { grid-template-columns: 1fr 1fr; }
+  .tool-card { grid-template-columns: 64px 1fr; }
+  .tool-art { width: 64px; height: 76px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

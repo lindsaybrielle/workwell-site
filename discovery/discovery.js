@@ -701,20 +701,28 @@
 
   // ---------- start ----------
   document.getElementById('start-btn').addEventListener('click', () => show('path'));
-  document.querySelectorAll('.d-path').forEach(b => b.addEventListener('click', () => {
-    state.mode = b.dataset.mode;
+  function startWith(mode) {
+    state.mode = mode;
     state.step = 0;
     state.answers = {};
     logEvent('start', state.mode);
     show('question');
     renderQuestion();
-  }));
+  }
+  document.querySelectorAll('.d-path').forEach(b => b.addEventListener('click', () => startWith(b.dataset.mode)));
 
   const startBtn = document.getElementById('start-btn');
   startBtn.disabled = true;
   fetch('content.json', { cache: 'no-cache' })
     .then(r => r.json())
-    .then(data => { content = data; startBtn.disabled = false; buildWheel(); })
+    .then(data => {
+      content = data;
+      startBtn.disabled = false;
+      buildWheel();
+      // The homepage links straight into a path with #me or #team.
+      const mode = { '#me': 'self', '#team': 'team' }[location.hash];
+      if (mode) startWith(mode);
+    })
     .catch(() => {
       startBtn.textContent = 'Couldn’t load the discovery. Please refresh.';
     });
