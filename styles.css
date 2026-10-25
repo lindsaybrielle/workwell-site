@@ -209,7 +209,7 @@ section { position: relative; }
 .tool-card h3 { font-size: 1.35rem; color: var(--teal); margin-top: 6px; }
 .tool-card p { font-size: 0.92rem; margin: 8px 0 0; line-height: 1.55; }
 .tool-link { display: inline-block; margin-top: 10px; font-weight: 600; font-size: 0.88rem; color: var(--mustard); }
-.play-cards-head { margin-top: 64px; }
+.section-head.play-cards-head { margin-top: 64px; }
 .play-cards-head h3 { font-size: 1.5rem; color: var(--teal); }
 .play-cards-head p { margin-top: 8px; }
 
