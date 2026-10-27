@@ -190,9 +190,17 @@ section { position: relative; }
 .fam-bubble { background: #e7f0ef; border-radius: var(--radius-md); padding: 20px 22px; }
 .fam-bubble p { margin: 0; font-size: 1rem; }
 .fam-bubble p + p { margin-top: 10px; opacity: 0.85; }
-.fam-quote { margin: 16px 0 0 4px; }
-.fam-quote blockquote { margin: 0; font-size: 0.9rem; font-style: italic; }
-.fam-quote figcaption { margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: var(--teal); }
+.fam-label { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose-deep); margin-bottom: 8px; }
+.fam-whatif { margin-top: 16px; padding-top: 16px; border-top: 1px dashed rgba(35, 95, 114, 0.3); }
+.fam-whatif p { font-family: 'Caprasimo', serif; font-size: 1.15rem; line-height: 1.4; color: var(--teal); }
+
+/* ---------- testimonials ---------- */
+.quotes { background: #eef4f3; }
+.quote-grid { margin-top: 36px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.quote-card { margin: 0; background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; }
+.quote-card blockquote { margin: 0; font-size: 0.98rem; line-height: 1.6; }
+.quote-card figcaption { font-weight: 600; font-size: 0.9rem; color: var(--teal); }
+.quote-card figcaption span { display: block; font-weight: 400; font-size: 0.8rem; color: var(--ink); opacity: 0.75; margin-top: 2px; }
 .fam-cta { display: flex; justify-content: center; margin-top: 48px; }
 
 /* ---------- how it works ---------- */
@@ -377,7 +385,7 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
   .hero h1 { order: 1; }
   .hero .lede { order: 2; }
   .hero-quiz { order: 3; margin-top: 28px; }
-  .steps, .tools { grid-template-columns: 1fr; }
+  .steps, .tools, .quote-grid { grid-template-columns: 1fr; }
   .fam-row, .fam-row.reverse { grid-template-columns: 1fr; justify-items: center; margin-top: 40px; }
   .fam-row.reverse .fam-art { order: 0; }
   .fam-art { width: 160px; }
