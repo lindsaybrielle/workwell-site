@@ -108,6 +108,22 @@
     });
   });
 
+  // Mobile menu: the toggle opens the nav links as a panel; choosing a link,
+  // pressing Escape or tapping outside closes it.
+  const nav = document.querySelector('.nav');
+  const navToggle = nav && nav.querySelector('.nav-toggle');
+  if (navToggle) {
+    const setNavOpen = (isOpen) => {
+      nav.classList.toggle('nav-open', isOpen);
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    };
+    navToggle.addEventListener('click', () => setNavOpen(!nav.classList.contains('nav-open')));
+    nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => setNavOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setNavOpen(false); });
+    document.addEventListener('click', (e) => { if (!nav.contains(e.target)) setNavOpen(false); });
+  }
+
   document.querySelectorAll('[data-mascot]').forEach(svg => {
     render(svg, svg.getAttribute('data-mascot'));
   });
@@ -353,11 +369,11 @@
   const TESTIMONIALS = [
     {
       quote: '“The team building cards have been a fantastic addition to our work environment. They’ve sparked meaningful conversations, strengthened our connections, and made collaboration feel more natural and fun. I’d highly recommend them to any team looking to build trust and engagement.”',
-      cite: '— Anika, Associate Manager'
+      cite: '— Anika, Associate Manager, development consultancy'
     },
     {
       quote: '“Some of the exercises I knew, and some were totally new. Having them physically in front of me makes the difference.”',
-      cite: '— Emily, Senior Manager'
+      cite: '— Emily, Senior Manager, tech advisory'
     }
   ];
   const tSlide = document.getElementById('t-slide');
