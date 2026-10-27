@@ -194,8 +194,6 @@
 .d-report h3 { color: #fbf6ea; font-size: 1.4rem; }
 .d-report p { font-size: 0.92rem; margin: 10px 0 0; color: rgba(251, 246, 234, 0.9); }
 .d-report .d-note { opacity: 1; }
-.d-tiers { list-style: none; padding: 0; margin: 16px 0 18px; display: grid; gap: 6px; }
-.d-tiers li { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(251, 246, 234, 0.2); padding: 6px 0; font-size: 0.94rem; }
 .d-report .btn { align-self: flex-start; margin-top: auto; background: var(--mustard); }
 
 .d-support { margin-top: 40px; font-size: 0.88rem; background: var(--rose-pale); border-radius: 14px; padding: 14px 18px; }

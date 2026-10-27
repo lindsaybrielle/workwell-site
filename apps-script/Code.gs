@@ -259,7 +259,6 @@ function reportHtml(c, d) {
 
     h2('Next steps') +
     p(c.teamReport.name + ': ' + c.teamReport.line) +
-    p(c.teamReport.tiers.map(t => t.label + ' ' + t.price).join('  |  ')) +
     '<p>Book a free 30-minute discovery call with Brielle: <a href="' + esc(L.calendly) + '" style="color:#235f72">' + esc(L.calendly) + '</a></p>' +
 
     (s.energy < 50 ? '<p style="background:#f1dee5;padding:10px 12px;margin-top:18px">' + esc(c.support) + '</p>' : '') +

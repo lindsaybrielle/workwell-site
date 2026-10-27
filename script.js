@@ -308,9 +308,9 @@
     smallScreen.addEventListener('change', updateWidget);
   }
 
-  // Web3Forms forms (contact and Team Weather waitlist). Every named field is
+  // Web3Forms contact form. Every named field is
   // sent, so adding a field to the HTML is enough to see it in the email.
-  document.querySelectorAll('#contact-form, #waitlist-form').forEach((form) => {
+  document.querySelectorAll('#contact-form').forEach((form) => {
     const status = form.querySelector('[data-form-status]');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -327,7 +327,7 @@
 
       const payload = { botcheck: form.botcheck.checked };
       new FormData(form).forEach((value, key) => {
-        if (key !== 'botcheck') payload[key] = typeof value === 'string' ? value.trim() : value;
+        if (key !== 'botcheck' && value !== '') payload[key] = typeof value === 'string' ? value.trim() : value;
       });
       if (payload.Topic && payload.Topic !== 'General') payload.subject += ' — ' + payload.Topic;
 
@@ -340,9 +340,7 @@
         const data = await res.json();
         if (data.success) {
           if (window.gtag) gtag('event', form.getAttribute('data-ga-event'));
-          status.textContent = form.id === 'waitlist-form'
-            ? 'You’re on the list. We’ll be in touch as soon as it opens.'
-            : 'Thanks — that’s sent. We’ll get back to you soon.';
+          status.textContent = 'Thanks — that’s sent. We’ll get back to you soon.';
           form.reset();
         } else {
           status.textContent = 'Something went wrong sending that. Mind trying again?';

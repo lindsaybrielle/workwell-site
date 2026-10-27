@@ -484,7 +484,6 @@
     const enablerList = enablers.map(v =>
       '<li><strong>' + esc(labelFor(v)) + '</strong><span>' + esc(content.enablerTips[v] || '') + '</span></li>').join('');
 
-    const tiers = content.teamReport.tiers.map(t => '<li><span>' + esc(t.label) + '</span><strong>' + esc(t.price) + '</strong></li>').join('');
     const smallTeam = team && ctx === '2-4'
       ? '<p class="d-note">Team reports need at least 5 people so individual answers stay confidential. For smaller teams, a workshop or discovery call is the better fit.</p>'
       : '';
@@ -586,7 +585,6 @@
                 '<div class="d-report">' +
                   '<h3>' + esc(content.teamReport.name) + '</h3>' +
                   '<p>' + esc(content.teamReport.line) + '</p>' +
-                  '<ul class="d-tiers">' + tiers + '</ul>' +
                   smallTeam +
                   '<span class="btn btn-teal btn-soon" aria-disabled="true">Coming soon</span>' +
                 '</div>' +
