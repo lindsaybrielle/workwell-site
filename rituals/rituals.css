@@ -198,11 +198,12 @@
   .r-grid { grid-template-columns: 1fr; }
   .r-combine { width: 100%; }
   .r-combine-icon { font-size: 1.5rem; }
-  .r-room-setup { grid-template-columns: 1fr; }
+  .r-room-setup { grid-template-columns: minmax(0, 1fr); }
 }
 
 @media (max-width: 420px) {
   .r-combine { padding: 14px 18px; gap: 12px; }
   .r-combine-title { font-size: 0.96rem; }
   .r-combine-sub { font-size: 0.74rem; }
+  .r-room-join { flex-wrap: wrap; }
 }

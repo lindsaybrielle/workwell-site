@@ -19,6 +19,9 @@
 
   let content = null;
   let state = freshState();
+  // True while a picked answer is waiting to move on, so a double-click
+  // can't skip the next question.
+  let advancing = false;
 
   function freshState() {
     return { id: newId(), mode: null, step: 0, answers: {}, unlocked: false };
@@ -207,9 +210,11 @@
         b.setAttribute('aria-checked', current === i ? 'true' : 'false');
         b.textContent = opt.label;
         b.addEventListener('click', () => {
+          if (advancing) return;
+          advancing = true;
           state.answers[q.id] = i;
           qOptions.querySelectorAll('.d-option').forEach((el, j) => el.setAttribute('aria-checked', j === i ? 'true' : 'false'));
-          setTimeout(advance, 220);
+          setTimeout(() => { advancing = false; advance(); }, 220);
         });
         qOptions.appendChild(b);
       });
