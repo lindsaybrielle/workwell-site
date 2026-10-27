@@ -60,7 +60,6 @@ section { position: relative; }
 .nav .cta-pill { text-decoration: none; white-space: nowrap; }
 .nav-toggle { display: none; }
 .path-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-.path-card .path-actions .btn { margin-top: 0; }
 
 .btn {
   display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
@@ -232,31 +231,25 @@ section { position: relative; }
 .play-next p { max-width: 52ch; margin: 0 auto 18px; font-size: 1rem; }
 
 /* ---------- workshops / paths ---------- */
-.paths { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.path-card { background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px 26px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
-.path-card .k { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
-.path-card.buy .k { color: var(--sage); }
-.path-card.book .k { color: var(--rose-deep); }
-.path-card h3 { font-size: 1.4rem; color: var(--teal); margin-top: 8px; }
-.path-card p.desc { font-size: 0.95rem; margin-top: 12px; opacity: 0.88; flex: 1; }
-.path-card .btn { margin-top: 20px; align-self: flex-start; }
-.path-card.book p.desc { flex: 0; }
-.path-list { margin: 16px 0 0; padding-left: 20px; font-size: 0.93rem; flex: 1; }
+.path-list { margin: 16px 0 0; padding-left: 20px; font-size: 0.93rem; }
 .path-list li + li { margin-top: 8px; }
 .path-note { font-size: 0.88rem; font-weight: 600; color: var(--teal); margin-top: 14px; }
-.mini-form { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
-.mini-form label { font-size: 0.78rem; font-weight: 600; margin-bottom: -4px; display: block; }
-.mini-form input, .mini-form select, .contact-form select {
-  font-family: 'Poppins', sans-serif; font-size: 0.92rem; border: 1px solid var(--line); border-radius: 10px;
-  padding: 12px 14px; background: var(--paper-card); color: var(--ink); width: 100%; box-sizing: border-box;
+.contact-form select {
+  font-family: 'Poppins', sans-serif; font-size: 0.95rem; border: 1px solid var(--line); border-radius: 10px;
+  padding: 14px 15px; background: var(--paper-card); color: var(--ink); width: 100%; box-sizing: border-box;
 }
-.mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.mini-row > div { display: flex; flex-direction: column; gap: 10px; }
-.mini-form .btn { margin-top: 6px; }
-.mini-form .note { font-size: 0.8rem; }
-.org-quote { margin: 36px auto 16px; max-width: 680px; text-align: center; }
-.org-quote blockquote { margin: 0; font-family: 'Caprasimo', serif; font-size: clamp(1.15rem, 2.4vw, 1.45rem); line-height: 1.4; color: var(--teal); }
-.org-quote figcaption { margin-top: 12px; font-size: 0.85rem; font-weight: 600; color: var(--rose-deep); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-row > div { display: flex; flex-direction: column; gap: 14px; }
+.org-card { margin-top: 40px; background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 30px 28px 28px; box-shadow: var(--shadow); }
+.org-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+.org-cols > div + div { border-left: 1px solid var(--line); padding-left: 36px; }
+.org-card .k { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); }
+.org-card .k-sage { color: var(--sage); }
+.org-card h3 { font-size: 1.4rem; color: var(--teal); margin-top: 8px; }
+.org-card p { font-size: 0.95rem; margin-top: 12px; opacity: 0.88; }
+.org-foot { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+.org-foot .path-note { margin: 0; opacity: 1; }
+.org-foot .path-actions { margin-top: 0; }
 .coach-card { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px 26px; box-shadow: var(--shadow); }
 .coach-card .k { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); }
 .coach-card h3 { font-size: 1.25rem; color: var(--teal); margin-top: 8px; }
@@ -393,9 +386,10 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
 }
 @media (max-width: 640px) {
   .flip-grid { grid-template-columns: 1fr 1fr; }
-  .paths { grid-template-columns: 1fr; }
+  .org-cols { grid-template-columns: 1fr; gap: 26px; }
+  .org-cols > div + div { border-left: none; padding-left: 0; border-top: 1px solid var(--line); padding-top: 24px; }
   .coach-card { flex-direction: column; align-items: flex-start; }
-  .mini-row { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
   .hq-choices { grid-template-columns: 1fr 1fr; }
   .tool-card { grid-template-columns: 64px 1fr; }
   .tool-art { width: 64px; height: 76px; }

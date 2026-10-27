@@ -322,57 +322,29 @@
       <h2>Bring workwell to your organisation</h2>
       <p>For organisations of 20+ people who want their teams to feel better and work better.</p>
     </div>
-    <div class="paths">
-      <div class="path-card book">
-        <div class="k">Live workshops &middot; organisations of 20+</div>
-        <h3>Book a workshop</h3>
-        <p class="desc">A live session that translates signature workwell practices into a personalised team experience &mdash; perfect for offsites, onboarding and leadership teams.</p>
-        <ul class="path-list">
-          <li>Shaped around what your teams need, after a short discovery call</li>
-          <li>Hands-on practices people can use the next working day</li>
-        </ul>
-        <p class="path-note">Pricing on enquiry.</p>
+    <div class="org-card">
+      <div class="org-cols">
+        <div>
+          <div class="k">Live workshops</div>
+          <h3>Book a workshop</h3>
+          <p>A live session that translates signature workwell practices into a personalised team experience &mdash; perfect for offsites, onboarding and leadership teams.</p>
+          <ul class="path-list">
+            <li>Shaped around what your teams need, after a short discovery call</li>
+            <li>Hands-on practices people can use the next working day</li>
+          </ul>
+        </div>
+        <div>
+          <div class="k k-sage">Team Weather report &middot; launching soon</div>
+          <h3>Hear from the whole team</h3>
+          <p>Everyone takes an in-depth discovery and you get a combined report: where people sit across the archetypes, the five elements driving your Team Weather, and a personalised practice plan. Individual answers stay confidential. Get in touch to join the waitlist.</p>
+        </div>
+      </div>
+      <div class="org-foot">
+        <p class="path-note">Pricing on enquiry. Book a call or email us about either.</p>
         <div class="path-actions">
           <a data-ga="book-call" class="btn btn-mustard" href="https://calendly.com/strouse" target="_blank" rel="noopener">Book a call</a>
           <a data-ga="enquire-workshop" data-topic="workshop" class="btn btn-ghost" href="#contact">Email your questions</a>
         </div>
-      </div>
-      <div class="path-card buy">
-        <div class="k">Team Weather report &middot; from &pound;99 &middot; launching soon</div>
-        <h3>Hear from the whole team</h3>
-        <p class="desc">Everyone takes an in-depth discovery and you get a combined report: where people sit across the archetypes, the five elements driving your Team Weather, and a personalised practice plan. Individual answers stay confidential. Join the waitlist and we'll tell you as soon as it opens.</p>
-        <form class="mini-form" id="waitlist-form" data-ga-event="waitlist_signup">
-          <input type="hidden" name="access_key" value="0309eb2f-fd44-4753-9148-4b5d3fb3c60d">
-          <input type="hidden" name="subject" value="Team Weather waitlist sign-up">
-          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-          <div class="mini-row">
-            <div>
-              <label for="w-email">Work email</label>
-              <input id="w-email" type="email" name="Email" placeholder="you@company.com" required autocomplete="email">
-            </div>
-            <div>
-              <label for="w-company">Company</label>
-              <input id="w-company" type="text" name="Company" placeholder="Company name" required autocomplete="organization">
-            </div>
-          </div>
-          <div class="mini-row">
-            <div>
-              <label for="w-size">Team size</label>
-              <select id="w-size" name="Team size" required>
-                <option value="" disabled selected>Choose</option>
-                <option>5&ndash;20 people</option>
-                <option>21&ndash;40 people</option>
-                <option>41+ people</option>
-              </select>
-            </div>
-            <div>
-              <label for="w-role">Your role</label>
-              <input id="w-role" type="text" name="Role" placeholder="e.g. Head of People" autocomplete="organization-title">
-            </div>
-          </div>
-          <button class="btn btn-sage" type="submit">Join the waitlist</button>
-          <div class="note" role="status" data-form-status></div>
-        </form>
       </div>
     </div>
 
@@ -431,7 +403,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Let's talk.</h2>
-      <p>Join the mailing list for best practices and resources on resilience and culture-building &mdash; or tell us a bit about your team if you're exploring a workshop.</p>
+      <p>Join the mailing list for best practices and resources on resilience and culture-building &mdash; or tell us a bit about your team if you're exploring a workshop or the Team Weather report.</p>
     </div>
     <form class="contact-form" id="contact-form" data-ga-event="contact_form_sent">
       <input type="hidden" name="access_key" value="0309eb2f-fd44-4753-9148-4b5d3fb3c60d">
@@ -443,10 +415,26 @@
       <input id="f-company" type="text" name="Company" placeholder="Company name" autocomplete="organization">
       <label for="f-email">Email</label>
       <input id="f-email" type="email" name="Email" placeholder="you@company.com" required autocomplete="email">
+      <div class="form-row">
+        <div>
+          <label for="f-role">Your role (optional)</label>
+          <input id="f-role" type="text" name="Role" placeholder="e.g. Head of People" autocomplete="organization-title">
+        </div>
+        <div>
+          <label for="f-size">Team size (optional)</label>
+          <select id="f-size" name="Team size">
+            <option value="">Choose</option>
+            <option>5&ndash;20 people</option>
+            <option>21&ndash;40 people</option>
+            <option>41+ people</option>
+          </select>
+        </div>
+      </div>
       <label for="f-topic">What's this about?</label>
       <select id="f-topic" name="Topic">
         <option value="General">Joining the mailing list, or just saying hi</option>
         <option value="Workshop enquiry">A workshop for my organisation</option>
+        <option value="Team Weather waitlist">Joining the Team Weather report waitlist</option>
         <option value="Bulk deck order">A bulk deck order (5+)</option>
         <option value="Coach pricing">Coach pricing</option>
       </select>

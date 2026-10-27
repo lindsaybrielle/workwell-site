@@ -503,12 +503,7 @@
 
   "teamReport": {
     "name": "Team Weather report",
-    "line": "Invite everyone on your team to complete an in-depth Team Weather Discovery and get a combined report: where individuals sit on the Team Archetypes, the five elements driving your Team's Weather, and a personalised practice plan. Individual answers stay confidential, with anonymised results used to provide insight into overall team dynamics.",
-    "tiers": [
-      { "label": "5–20 people", "price": "£99" },
-      { "label": "21–40 people", "price": "£199" },
-      { "label": "41+ people", "price": "£329" }
-    ]
+    "line": "Invite everyone on your team to complete an in-depth Team Weather Discovery and get a combined report: where individuals sit on the Team Archetypes, the five elements driving your Team's Weather, and a personalised practice plan. Individual answers stay confidential, with anonymised results used to provide insight into overall team dynamics."
   },
 
   "support": "If you've felt exhausted or low for more than a couple of weeks, please talk to someone: your GP, your Employee Assistance Programme if you have one, or Mind (mind.org.uk). If you need to talk right now, Samaritans are free to call on 116 123, day or night.",
