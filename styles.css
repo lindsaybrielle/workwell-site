@@ -82,7 +82,6 @@ section { position: relative; }
 .hero .wrap { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
 .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
 .hero .lede { margin-top: 20px; font-size: 1.12rem; max-width: 48ch; color: rgba(251, 246, 234, 0.9); }
-.hero .cta-row { display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
 .hero-stage { display: flex; justify-content: center; position: relative; }
 .hero-stage svg { width: min(300px, 80%); filter: drop-shadow(0 30px 40px rgba(0,0,0,0.25)); }
 .hero-ring-bg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 0; }
@@ -155,6 +154,11 @@ section { position: relative; }
 .pack-copy h3 { font-size: 1.7rem; color: #fbf6ea; margin-top: 6px; }
 .pack-copy p { margin-top: 14px; font-size: 0.98rem; max-width: 46ch; color: rgba(255,255,255,0.92); }
 .pack-copy .btn { margin-top: 22px; }
+.pack-copy .pack-price { margin-top: 18px; font-family: 'Caprasimo', serif; font-size: 1.5rem; color: #fbf6ea; }
+.pack-price span { font-family: 'Poppins', sans-serif; font-size: 0.85rem; opacity: 0.85; }
+.pack-price + .btn { margin-top: 12px; }
+.pack-bulk { display: block; margin-top: 14px; font-size: 0.88rem; font-weight: 600; color: #fbf6ea; }
+.pack-bulk:hover { text-decoration: none; }
 
 /* ---------- hero quiz card ---------- */
 .hero-quiz { background: var(--paper-card); color: var(--ink); border-radius: var(--radius-lg); padding: 28px 26px; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.45); display: flex; flex-direction: column; gap: 14px; }
@@ -213,6 +217,8 @@ section { position: relative; }
 .section-head.play-cards-head { margin-top: 36px; }
 .play-cards-head h3 { font-size: 1.5rem; color: var(--teal); }
 .play-cards-head p { margin-top: 8px; }
+.play-next { margin-top: 44px; text-align: center; }
+.play-next p { max-width: 52ch; margin: 0 auto 18px; font-size: 1rem; }
 
 /* ---------- workshops / paths ---------- */
 .paths { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -223,6 +229,25 @@ section { position: relative; }
 .path-card h3 { font-size: 1.4rem; color: var(--teal); margin-top: 8px; }
 .path-card p.desc { font-size: 0.95rem; margin-top: 12px; opacity: 0.88; flex: 1; }
 .path-card .btn { margin-top: 20px; align-self: flex-start; }
+.path-card.book p.desc { flex: 0; }
+.path-list { margin: 16px 0 0; padding-left: 20px; font-size: 0.93rem; flex: 1; }
+.path-list li + li { margin-top: 8px; }
+.path-note { font-size: 0.88rem; font-weight: 600; color: var(--teal); margin-top: 14px; }
+.mini-form { margin-top: 18px; display: flex; flex-direction: column; gap: 10px; }
+.mini-form label { font-size: 0.78rem; font-weight: 600; margin-bottom: -4px; display: block; }
+.mini-form input, .mini-form select, .contact-form select {
+  font-family: 'Poppins', sans-serif; font-size: 0.92rem; border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; background: var(--paper-card); color: var(--ink); width: 100%; box-sizing: border-box;
+}
+.mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mini-row > div { display: flex; flex-direction: column; gap: 10px; }
+.mini-form .btn { margin-top: 6px; }
+.mini-form .note { font-size: 0.8rem; }
+.coach-card { margin-top: 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--paper-card); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 24px 26px; box-shadow: var(--shadow); }
+.coach-card .k { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); }
+.coach-card h3 { font-size: 1.25rem; color: var(--teal); margin-top: 8px; }
+.coach-card p { font-size: 0.95rem; margin-top: 8px; opacity: 0.88; max-width: 62ch; }
+.coach-card .btn { flex-shrink: 0; }
 
 .pillars-intro { margin-top: 52px; text-align: center; }
 .pillars-intro h3 { font-family: 'Poppins',sans-serif; font-weight: 600; font-size: 1.05rem; }
@@ -283,7 +308,8 @@ footer.sitefoot a { color: inherit; }
 footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-align: center; font-size: 0.82rem; opacity: 0.65; }
 
 /* ---------- floating easter-egg widget ---------- */
-.egg-widget { position: fixed; right: clamp(14px, 3vw, 28px); bottom: clamp(14px, 3vw, 28px); z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.egg-widget.egg-hidden { opacity: 0; transform: translateY(16px); pointer-events: none; }
+.egg-widget { transition: opacity 0.25s ease, transform 0.25s ease; position: fixed; right: clamp(14px, 3vw, 28px); bottom: clamp(14px, 3vw, 28px); z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .egg-panel { width: min(280px, 80vw); background: var(--paper-card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 20px 20px 18px; animation: eggIn 0.26s ease; }
 @keyframes eggIn { from { opacity: 0; transform: scale(0.92) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 .egg-panel .k { font-weight: 600; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose-deep); }
@@ -312,13 +338,12 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
   .pillars { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
   .hero-stage { order: -1; }
-  /* On small screens the quiz card sits straight after the intro, above the secondary buttons. */
+  /* On small screens the quiz card sits straight after the intro. */
   .hero .wrap { display: flex; flex-direction: column; gap: 0; }
   .hero-copy { display: contents; }
   .hero h1 { order: 1; }
   .hero .lede { order: 2; }
   .hero-quiz { order: 3; margin-top: 28px; }
-  .hero .cta-row { order: 4; }
   .steps, .tools { grid-template-columns: 1fr; }
   .fam-row, .fam-row.reverse { grid-template-columns: 1fr; justify-items: center; margin-top: 40px; }
   .fam-row.reverse .fam-art { order: 0; }
@@ -328,6 +353,8 @@ footer.sitefoot { border-top: 1px solid var(--line); padding: 40px 0 60px; text-
 @media (max-width: 640px) {
   .flip-grid { grid-template-columns: 1fr 1fr; }
   .paths { grid-template-columns: 1fr; }
+  .coach-card { flex-direction: column; align-items: flex-start; }
+  .mini-row { grid-template-columns: 1fr; }
   .hq-choices { grid-template-columns: 1fr 1fr; }
   .tool-card { grid-template-columns: 64px 1fr; }
   .tool-art { width: 64px; height: 76px; }

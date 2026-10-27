@@ -277,51 +277,78 @@
     fab.addEventListener('click', () => { if (open) closePanel(); else openPanel(); });
   }
 
-  const contactForm = document.getElementById('contact-form');
-  const formStatus = document.getElementById('form-status');
-  if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
+  const eggWidget = document.getElementById('egg-widget');
+  const heroEl = document.querySelector('.hero');
+  if (eggWidget && heroEl && 'IntersectionObserver' in window) {
+    const smallScreen = window.matchMedia('(max-width: 900px)');
+    let heroVisible = false;
+    const updateWidget = () => {
+      eggWidget.classList.toggle('egg-hidden', smallScreen.matches && heroVisible && !open);
+    };
+    new IntersectionObserver((entries) => {
+      heroVisible = entries[0].isIntersecting;
+      updateWidget();
+    }, { rootMargin: '0px 0px -120px 0px' }).observe(heroEl);
+    smallScreen.addEventListener('change', updateWidget);
+  }
+
+  // Web3Forms forms (contact and Team Weather waitlist). Every named field is
+  // sent, so adding a field to the HTML is enough to see it in the email.
+  document.querySelectorAll('#contact-form, #waitlist-form').forEach((form) => {
+    const status = form.querySelector('[data-form-status]');
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const accessKey = contactForm.access_key.value;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const accessKey = form.access_key.value;
 
       if (!accessKey || accessKey === 'PASTE_YOUR_WEB3FORMS_KEY_HERE') {
-        formStatus.textContent = 'Form isn’t connected yet — add a Web3Forms access key to go live.';
+        status.textContent = 'Form isn’t connected yet — add a Web3Forms access key to go live.';
         return;
       }
 
       submitBtn.disabled = true;
-      formStatus.textContent = 'Sending…';
+      status.textContent = 'Sending…';
+
+      const payload = { botcheck: form.botcheck.checked };
+      new FormData(form).forEach((value, key) => {
+        if (key !== 'botcheck') payload[key] = typeof value === 'string' ? value.trim() : value;
+      });
+      if (payload.Topic && payload.Topic !== 'General') payload.subject += ' — ' + payload.Topic;
 
       try {
         const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            access_key: accessKey,
-            subject: contactForm.subject.value,
-            botcheck: contactForm.botcheck.checked,
-            Name: contactForm.Name.value.trim(),
-            Company: contactForm.Company.value.trim(),
-            Email: contactForm.Email.value.trim(),
-            Message: contactForm.Message.value.trim()
-          })
+          body: JSON.stringify(payload)
         });
         const data = await res.json();
         if (data.success) {
-          if (window.gtag) gtag('event', 'contact_form_sent');
-          formStatus.textContent = 'Thanks — that’s sent. We’ll get back to you soon.';
-          contactForm.reset();
+          if (window.gtag) gtag('event', form.getAttribute('data-ga-event'));
+          status.textContent = form.id === 'waitlist-form'
+            ? 'You’re on the list. We’ll be in touch as soon as it opens.'
+            : 'Thanks — that’s sent. We’ll get back to you soon.';
+          form.reset();
         } else {
-          formStatus.textContent = 'Something went wrong sending that. Mind trying again?';
+          status.textContent = 'Something went wrong sending that. Mind trying again?';
         }
       } catch (err) {
-        formStatus.textContent = 'Something went wrong sending that. Mind trying again?';
+        status.textContent = 'Something went wrong sending that. Mind trying again?';
       } finally {
         submitBtn.disabled = false;
       }
     });
-  }
+  });
+
+  // Links with data-topic (workshop, bulk, coach) jump to the contact form
+  // with the matching "What's this about?" option already chosen.
+  const topicSelect = document.getElementById('f-topic');
+  const TOPICS = { workshop: 'Workshop enquiry', bulk: 'Bulk deck order', coach: 'Coach pricing' };
+  document.querySelectorAll('[data-topic]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const value = TOPICS[link.getAttribute('data-topic')];
+      if (topicSelect && value) topicSelect.value = value;
+    });
+  });
 
   const TESTIMONIALS = [
     {
